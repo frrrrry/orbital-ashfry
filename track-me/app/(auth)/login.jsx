@@ -3,13 +3,21 @@ import { useState } from "react";
 import { Text, Button, ActivityIndicator } from "react-native-paper";
 import { Link } from "expo-router";
 import { Icon } from '@rneui/themed'; 
+import { useUserAuth } from "../../context/auth";
+import { useFonts } from 'expo-font';
 
 export default function LoginPage() {
+
+    const [fontsLoaded] = useFonts({
+        'Bitter-Bold': require('../../assets/fonts/Bitter-Bold.ttf'),
+      });
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [errMsg, setErrMsg] = useState('');
-    const handleSubmit = async () => {
+    const { logIn } = useUserAuth();
+    const handleLogin = async () => {
         setErrMsg('');
         if (email == '') {
             setErrMsg("email cannot be empty")
@@ -21,11 +29,30 @@ export default function LoginPage() {
         }
         setLoading(true);
         
-        setLoading(false);
-        if (error) {
-            setErrMsg(error.message);
-            return;
+        try {
+          await logIn(email, password)
+            .then(userCredentials => {
+              const user = userCredentials.user;
+              console.log('Logged in with:', user.email);
+            })
+        } catch (err) {
+            if (err.message == "Firebase: Error (auth/invalid-email).") {
+                setErrMsg("Please enter a valid email");
+            }
+            else if (err.message == "Firebase: Error (auth/user-not-found).") {
+                setErrMsg("Account does not exist. Do create account");
+            }
+            else if (err.message == "Firebase: Error (auth/wrong-password).") {
+                setErrMsg("Wrong password");
+            }
+            else {
+                setErrMsg(err.message);
+            }
+            console.log(err.message);
         }
+
+        setLoading(false);
+        
     }
     return (
         <View style={styles.container}>
@@ -60,19 +87,25 @@ export default function LoginPage() {
                     <Icon name="lock" size={20} color="#000"/>
                 </View>
 
-                <Button onPress={handleSubmit} 
+                <Button onPress={handleLogin} 
                 mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer }>
                     Sign in</Button>
                 {errMsg !== "" && <Text style={ {top:20} }>{errMsg}</Text>}
-                {loading && <ActivityIndicator />}
+                {loading && <ActivityIndicator color="black" style={ styles.submitContainer }/>}
 
             </View>
             
-            <View style={{ flex: 0.5, justifyContent: 'left' }}>
-                <Link href="/register">
-                    <Button textColor="#8A8A8A">Create Account</Button>
-                </Link>
+            <View style={{ flex: 0.5, flexDirection:"row"  }}>
+                <Text>
+                    <Link href="/register">
+                        <Button textColor="black">Create Account</Button>
+                    </Link>
+                    <Link href="/forgetpassword">
+                        <Button textColor="#8A8A8A">Forgot Password?</Button>
+                    </Link>
+                </Text>
             </View>
+
         </View>
     )
 }
@@ -86,7 +119,9 @@ const styles = StyleSheet.create({
       fontSize: 36,
       fontWeight: "bold",
       textAlign: "left",
-      top: 100
+      top: 100,
+      fontFamily: 'Bitter-Bold',
+      color: 'red'
     },
     subtitle: {
       fontSize: 20,

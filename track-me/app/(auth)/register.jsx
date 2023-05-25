@@ -3,13 +3,15 @@ import { useState } from "react";
 import { Text, Button, ActivityIndicator } from "react-native-paper";
 import { Link } from "expo-router";
 import { Icon } from '@rneui/themed'; 
+import { useUserAuth } from "../../context/auth";
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [errMsg, setErrMsg] = useState('');
-    const handleSubmit = async () => {
+    const { signUp } = useUserAuth();
+    const handleSignup = async () => {
         setErrMsg('');
         if (email == '') {
             setErrMsg("email cannot be empty")
@@ -20,12 +22,27 @@ export default function RegisterPage() {
             return;
         }
         setLoading(true);
-        
-        setLoading(false);
-        if (error) {
-            setErrMsg(error.message);
-            return;
-        }
+
+        try {
+            await signUp(email, password)
+              .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log('Registered with:', user.email);
+              })
+          } catch (err) {
+              if (err.message == "Firebase: Error (auth/invalid-email).") {
+                setErrMsg("Please enter a valid email");
+              }
+              else if (err.message == "Firebase: Password should be at least 6 characters (auth/weak-password).") {
+                setErrMsg("Password should be at least 6 characters");
+              }
+              else {
+                setErrMsg(err.message);
+              }
+              console.log(err.message);
+          }
+  
+          setLoading(false);
     }
     return (
         <View style={styles.container}>
@@ -59,11 +76,11 @@ export default function RegisterPage() {
                     <Icon name="lock" size={20} color="#000"/>
                 </View>
 
-                <Button onPress={handleSubmit} 
+                <Button onPress={handleSignup} 
                 mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer }>
                     Sign up</Button>
                 {errMsg !== "" && <Text style={ {top:20} }>{errMsg}</Text>}
-                {loading && <ActivityIndicator />}
+                {loading && <ActivityIndicator color="black" style={ styles.submitContainer }/>}
 
             </View>
             
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
     title: {  
       fontSize: 36,
       fontWeight: "bold",
-      textAlign: "left",
+      textAlign: "center",
       top: 100
     },
     subtitle: {
@@ -103,6 +120,7 @@ const styles = StyleSheet.create({
     inputContainer : {
         flexDirection: 'row',
         height: 40,
+        width: 300,
         padding: 10,
         borderWidth: 1,
         borderRadius: 20,
