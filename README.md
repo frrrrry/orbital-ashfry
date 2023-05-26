@@ -102,6 +102,10 @@ Track-me is an Android app that enables users to key in their daily transactions
 * Firebase
 * Java
 
+# Diagram
+
+![diagram of the login/sign up page](https://i.pinimg.com/564x/99/5f/19/995f195a6101caca9d4f9bd37c2a6255.jpg)
+
 # Proof-of-Concept
 
 Refer to video demonstration:
