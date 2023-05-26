@@ -3,7 +3,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function HomeScreen() {
     return (
-        <Tabs screenOptions={{ tabBarShowLabel: false, tabBarActiveTintColor: 'black'}}>
+        <Tabs screenOptions={{ tabBarShowLabel: false, tabBarActiveTintColor: 'black', headerShown: false}}>
             
             <Tabs.Screen 
               name="index" 
