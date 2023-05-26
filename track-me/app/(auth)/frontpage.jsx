@@ -1,6 +1,5 @@
-import { StyleSheet, View, FlatList, Alert } from "react-native";
-import { useState } from 'react';
-import { Button, Checkbox, Text, TextInput } from 'react-native-paper';
+import { StyleSheet, View } from "react-native";
+import { Button, Text } from 'react-native-paper';
 import { Link } from "expo-router";
 
 export default function FrontPage() {
