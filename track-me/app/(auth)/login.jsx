@@ -120,8 +120,6 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       textAlign: "left",
       top: 100,
-      fontFamily: 'Bitter-Bold',
-      color: 'red'
     },
     subtitle: {
       fontSize: 20,
