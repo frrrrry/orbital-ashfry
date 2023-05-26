@@ -106,7 +106,7 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 
 ![diagram of the login/sign up page](https://i.pinimg.com/564x/99/5f/19/995f195a6101caca9d4f9bd37c2a6255.jpg)
 
-[link to image](https://imgur.com/a/UjOWnsN)
+[link to image](https://imgur.com/a/VKoJnKh)
 
 # Proof-of-Concept
 
