@@ -32,7 +32,7 @@ We hope to make a mobile app for people to keep track of their expenditures for 
 
 # Scope of Project
 
-Track-me is an Android app that enables users to key in their daily transactions and create purchase goals easily. 
+Track-me is an **iOS app** that enables users to key in their daily transactions and create purchase goals easily. 
 
 ## Features
 
