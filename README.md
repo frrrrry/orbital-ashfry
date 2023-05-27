@@ -6,7 +6,7 @@
 
 Ashfry
 
-# Level of Acheivement:
+# Proposed Level of Acheivement:
 
 Apollo
 
@@ -45,6 +45,7 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 #### Specifications: 
 
 * Allows users to create an account and login to their accounts to subsequently use the app 
+* Database integration to store user’s email address and password for user authentication
 
 ### USER PROFILE 
 
@@ -60,6 +61,7 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 * Allows users to write a bio where they can write a short description of themselves as well as their saving goals 
 * Allows users to edit their allowance for a specific time period 
 ** Time option available which is measured in days 
+* Database integration to store user’s profile data (i.e. profile picture, username and bio)
 
 ### SAVING BOOK
 
@@ -75,6 +77,7 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 * Calculates the sum of money spent daily
 * Displays total weekly and monthly expenditure (this feature can be turned off) 
 * Warns users when their total transactions for a specific time period exceeds the allowance they put in for that time period under their user profile
+* Database integration to store user’s daily transactions data
 
 ### SUB-WALLET
 
@@ -91,6 +94,7 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 * Time option available which is measured in days 
 * Calculates the percentage of user’s progress to achieving their savings goal 
 * Reminder option available which can be turned off or on where app gives daily reminders of your goal to reaching the amount specified in your sub-wallets
+* Database integration to store user’s sub-wallet data
 
 # Tech Stack
 
@@ -131,7 +135,7 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 
 # Diagram
 
-![diagram of the login/sign up page](https://i.imgur.com/y4dcDXD.png)
+![Diagram of the login/sign up page](https://i.imgur.com/y4dcDXD.png)
 
 [Link to image](https://imgur.com/a/YA2hRgu)
 
@@ -139,7 +143,11 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 
 Refer to video demonstration:
 
-[Milestone 1 video]()
+[Milestone 1 video](https://youtu.be/AtYgTm4qThI)
+
+[Milestone 1 poster](https://imgur.com/a/o6suXmp)
+
+![Milestone 1 poster](https://i.imgur.com/0lbm37W.png)
 
 # Project Log
 
