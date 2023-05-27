@@ -137,15 +137,15 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 
 ![Diagram of the login/sign up page](https://i.imgur.com/y4dcDXD.png)
 
-[Link to image](https://imgur.com/a/YA2hRgu)
+[Link to diagram](https://imgur.com/a/YA2hRgu)
 
 # Proof-of-Concept
 
 Refer to video demonstration:
 
-[Milestone 1 video](https://youtu.be/AtYgTm4qThI)
+[Link to Milestone 1 video](https://youtu.be/AtYgTm4qThI)
 
-[Milestone 1 poster](https://imgur.com/a/o6suXmp)
+[Link to Milestone 1 poster](https://imgur.com/a/o6suXmp)
 
 ![Milestone 1 poster](https://i.imgur.com/0lbm37W.png)
 
@@ -153,4 +153,4 @@ Refer to video demonstration:
 
 Refer to attached spreadsheet:
 
-[Ashfry Project Log](https://docs.google.com/spreadsheets/d/1trdUuaUdj4Q0U_DUkenU0PnDvQ4wsMBUp0TCZhxd8Gw/edit?usp=sharing)
+[Link to Ashfry Project Log](https://docs.google.com/spreadsheets/d/1trdUuaUdj4Q0U_DUkenU0PnDvQ4wsMBUp0TCZhxd8Gw/edit?usp=sharing)
