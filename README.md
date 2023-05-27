@@ -145,4 +145,4 @@ Refer to video demonstration:
 
 Refer to attached spreadsheet:
 
-[Ashfry Project Log]()
+[Ashfry Project Log](https://docs.google.com/spreadsheets/d/1trdUuaUdj4Q0U_DUkenU0PnDvQ4wsMBUp0TCZhxd8Gw/edit?usp=sharing)
