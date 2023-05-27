@@ -109,23 +109,23 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 | Liftoff | Design app's homepage                                              | 12 May           |
 | Liftoff | Pitch for orbital liftoff                                          | 12 May           |
 | 1       | Pick up necessary technology such as ReactNative, Git and Firebase | 13 - 20 May      |
-| 1       | Design login and sign up page                                      | 13 - 20 May      |
-| 1       | Login and sign up page creation                                    | 21 - 28 May      |
-| 1       | Integrate backend authentication                                   | 21 - 28 May      | 
-| 1       | README, video and poster for Milestone 1 submission                | 21 - 28 May      |
+|         | Design login and sign up page                                      | 13 - 20 May      |
+|         | Login and sign up page creation                                    | 21 - 28 May      |
+|         | Integrate backend authentication                                   | 21 - 28 May      | 
+|         | README, video and poster for Milestone 1 submission                | 21 - 28 May      |
 | 2       | Design app icon                                                    | 30 May - 4 June  |
-| 2       | Homepage creation                                                  | 30 May - 4 June  |
-| 2       | Testing and debugging homepage                                     | 30 May - 4 June  |
-| 2       | Profile creation page and integrate database                       | 5 - 11 June      |
-| 2       | Testing and debugging profile creation page                        | 5 - 11 June      |
-| 2       | Saving book creation                                               | 12 - 22 June     |
-| 2       | Testing and debugging of saving book feature in app                | 12 - 22 June     |
-| 2       | README, video and poster for Milestone 2 submission                | 22 - 25 June     |
+|         | Homepage creation                                                  | 30 May - 4 June  |
+|         | Testing and debugging homepage                                     | 30 May - 4 June  |
+|         | Profile creation page and integrate database                       | 5 - 11 June      |
+|         | Testing and debugging profile creation page                        | 5 - 11 June      |
+|         | Saving book creation                                               | 12 - 22 June     |
+|         | Testing and debugging of saving book feature in app                | 12 - 22 June     |
+|         | README, video and poster for Milestone 2 submission                | 22 - 25 June     |
 | 3       | Sub-wallet creation                                                | 27 June - 6 July |
-| 3       | Testing and debugging subwallet feature in app                     | 27 June - 6 July |
-| 3       | Integration of systems                                             | 7 - 19 July      | 
-| 3       | Testing and debugging                                              | 7 - 19 July      |
-| 3       | README, video and poster for Milestone 3 submission                | 20 - 23 July     |
+|         | Testing and debugging subwallet feature in app                     | 27 June - 6 July |
+|         | Integration of systems                                             | 7 - 19 July      | 
+|         | Testing and debugging                                              | 7 - 19 July      |
+|         | README, video and poster for Milestone 3 submission                | 20 - 23 July     |
 
 [Link to table](https://docs.google.com/document/d/18RDOaiiJIZn5-8CcjX7VRHnfeyNTE6xxGBJuKg2O1Kc/edit?usp=sharing)
 
