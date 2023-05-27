@@ -106,8 +106,8 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 | **MS**  | **Tasks**                                                          | **Date**         |
 |---------|--------------------------------------------------------------------|------------------|
 | Liftoff | Familiarize with Figma                                             | 10 - 12 May      | 
-| Liftoff | Design app's homepage                                              | 12 May           |
-| Liftoff | Pitch for orbital liftoff                                          |                  |
+|         | Design app's homepage                                              | 12 May           |
+|         | Pitch for orbital liftoff                                          |                  |
 | 1       | Pick up necessary technology such as ReactNative, Git and Firebase | 13 - 20 May      |
 |         | Design login and sign up page                                      |                  |
 |         | Login and sign up page creation                                    | 21 - 28 May      |
