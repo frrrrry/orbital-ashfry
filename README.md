@@ -153,7 +153,7 @@ Track-me is an **Android app** that enables users to key in their daily transact
 
 Refer to video demonstration:
 
-[Link to Milestone 1 video](https://youtu.be/AtYgTm4qThI)
+[Link to Milestone 1 video](https://youtu.be/9oLOFmfXvJQ)
 
 [Link to Milestone 1 poster](https://imgur.com/a/o6suXmp)
 
