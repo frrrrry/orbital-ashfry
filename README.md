@@ -102,6 +102,7 @@ Track-me is an **Android app** that enables users to key in their daily transact
 
 * Download expo go on google play store.
 * Open the app and tap scan QR code 
+
 ![track-me](https://github.com/frrrrry/orbital-ashfry/assets/122355925/c61a7c3e-f109-413b-ad1b-17aaf45e9b2e)
 * Recommended to set text size on your phone settings to default 
 
