@@ -96,6 +96,15 @@ Track-me is an **iOS app** that enables users to key in their daily transactions
 * Reminder option available which can be turned off or on where app gives daily reminders of your goal to reaching the amount specified in your sub-wallets
 * Database integration to store user’s sub-wallet data
 
+# Setup instructions
+
+#### Andriod user
+
+* Download expo go on google play store.
+* Open the app and tap scan QR code 
+![track-me](https://github.com/frrrrry/orbital-ashfry/assets/122355925/c61a7c3e-f109-413b-ad1b-17aaf45e9b2e)
+* Recommended to set text size on your phone settings to default 
+
 # Tech Stack
 
 ## Front-End
@@ -154,11 +163,4 @@ Refer to video demonstration:
 Refer to attached spreadsheet:
 
 [Link to Ashfry Project Log](https://docs.google.com/spreadsheets/d/1trdUuaUdj4Q0U_DUkenU0PnDvQ4wsMBUp0TCZhxd8Gw/edit?usp=sharing)
-
-# Setup instructions
-#### Andriod user
-* Download expo go on google play store.
-* Open the app and tap scan QR code 
-* ![track-me](https://github.com/frrrrry/orbital-ashfry/assets/122355925/c61a7c3e-f109-413b-ad1b-17aaf45e9b2e)
-
 
