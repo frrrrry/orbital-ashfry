@@ -16,8 +16,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "host.exp.Exponent"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
@@ -27,17 +26,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "a9b81890-38a0-40fb-8aae-4aa1d9bdc808"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/a9b81890-38a0-40fb-8aae-4aa1d9bdc808"
     }
   }
 }
