@@ -22,7 +22,7 @@ export default function HomeScreen() {
             />
 
             <Tabs.Screen 
-              name="transaction" 
+              name="savingbook" 
               options={{ tabBarIcon: ({color}) => ( 
               <Ionicons name="book" size={20} color={color}/> 
                 )

@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function TransactionsPage() {
+export default function SavingBookPage() {
   return (
     <View style={styles.container}>
-      <Text>Transactions</Text>
+      <Text>Saving Book</Text>
       <StatusBar style="auto" />
     </View>
   );
