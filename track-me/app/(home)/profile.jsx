@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Text, Button } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useUserAuth } from "../../context/auth";
+import { Link } from "expo-router";
 
 export default function ProfilePage() {
 
@@ -24,7 +25,13 @@ export default function ProfilePage() {
       <Button onPress={handleLogout} 
                 mode="contained" buttonColor="#c5c5c5" style={ styles.signoutButton }>
                     Sign out</Button>
+      <View>
+        <Link href="../(profile)/profilecreationpage">
+          <Button textColor="#8A8A8A">Edit Profile</Button>
+        </Link>
+      </View>
     </View>
+    
   );
 }
 
