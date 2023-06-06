@@ -1,5 +1,3 @@
-// line 70 need to be editted
-
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { Text } from "react-native-paper";
@@ -65,9 +63,7 @@ export default function ForgetpasswordPage() {
             <Text style={ styles.setWhite }>Back to Sign in</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.emptycontainer}>
-
-          </TouchableOpacity>
+          <TouchableOpacity></TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.8} style={styles.resetpasswordContainer} 
             onPress={handleresetPassword}>

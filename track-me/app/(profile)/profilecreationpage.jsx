@@ -1,13 +1,65 @@
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput, Image } from "react-native";
 import { useState } from "react";
-import { Text, Button, ActivityIndicator } from "react-native-paper";
-import { Link } from "expo-router";
+import { Text, Button } from "react-native-paper";
+import { useRouter } from "expo-router";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useUserAuth } from "../../context/auth";
+import { updateUserProfile } from '../../firebase/firestore';
+import { uploadImage } from '../../firebase/storage';
+
+//not sure if this is correct
+import * as ImagePicker from 'expo-image-picker';
 
 export default function ProfileCreationPage() {
-    // const [picture, setPicture] = useState((''));
+    const [image, setImage] = useState(null);
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+    const { user } = useUserAuth();
+    const router = useRouter();
+
+    // this part is to allow user to pic image -> not sure if correct 
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality: 1
+        });
+        console.log(result);
+        const imagelink = result.assets[0].uri;
+
+        if (!result.canceled) {
+            setImage(imagelink);
+            console.log(image);
+        }
+    }; 
+    
+    const handleSave = async () => {
+        setErrMsg('');
+
+        // this part is to upload image to firebase storage -> but i keep getting error
+        // error message shown -> Property 'format' doesn't exist
+        try {
+            await uploadImage(image, user.uid);
+        } catch (err) {
+            setErrMsg(err.message)
+            console.log("error message: ", err.message);
+            console.log("uid:", user.uid);
+            console.log('error due to image');
+        }
+
+    
+        try {
+            await updateUserProfile(user.uid, username, bio);
+        } catch (error) {
+            setErrMsg(error.message)
+            console.log("error message: ", error.message);
+            console.log("uid:", user.uid);
+            console.log('error due to text');
+        }
+        router.push("../(home)/profile");
+    }
 
     return (
         <View style={styles.container}>
@@ -18,9 +70,14 @@ export default function ProfileCreationPage() {
             <View style={{ flex: 2.5 }}>
                 <View style={{ flexDirection: 'column', padding: 10 }}>
                     <View>
-                        <Ionicons style={{ alignSelf: 'center' } } name="ios-person-circle-outline" size={100} color={'black'}/>
+                    {image 
+                        ? <Image source={{ uri: image }} style={{ width: 100, height: 100, alignSelf: "center" }} />
+                        : <Ionicons style={{ alignSelf: 'center' } } name="ios-person-circle-outline" size={100} color={'black'}/>
+                        }
+
                     </View>
-                    <Button textColor="#8a8a8a">upload profile picture</Button>
+
+                    <Button onPress={pickImage} textColor="#8a8a8a">upload profile picture</Button>
                 </View>
 
                 <Text style={styles.body}>Username</Text>
@@ -44,11 +101,10 @@ export default function ProfileCreationPage() {
                         onChangeText={setBio} />
                 </View>
                 <View style={{ top: 20 }}>
-                <Link href="../(home)/profile">
-                    <Button mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer }>
+                    <Button onPress={handleSave} 
+                    mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer }>
                         Save
                     </Button>
-                </Link>
             </View>
             </View>
         </View>

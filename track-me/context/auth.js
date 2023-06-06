@@ -11,11 +11,6 @@ import {
 
 const AuthContext = createContext();
 
-// This hook can be used to access the user info.
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
 // This hook will protect the route access based on user authentication.
 function useProtectedRoute(user) {
   const segments = useSegments();
@@ -72,6 +67,7 @@ export function AuthProvider({ children }) {
   >{children}</ AuthContext.Provider>
 }
 
+// This hook can be used to access the user info.
 export function useUserAuth() {
   return useContext(AuthContext);
 }
