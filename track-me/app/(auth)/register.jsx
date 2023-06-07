@@ -46,7 +46,7 @@ export default function RegisterPage() {
           else {
             setErrMsg(err.message);
           }
-          console.log(err.message);
+          console.log("here", err.message);
         }
         
         setLoading(false);
@@ -60,7 +60,7 @@ export default function RegisterPage() {
                 <Text style={styles.subtitle}></Text>
             </View>
 
-            <View style={{ flex: 2 }}>
+            <View style={{ flex: 1.85 }}>
                 <Text style={styles.body}>Email</Text>
                 <View style={styles.inputContainer}>
                     <TextInput

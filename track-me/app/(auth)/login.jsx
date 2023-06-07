@@ -62,7 +62,7 @@ export default function LoginPage() {
                 <Text style={styles.subtitle}>Please sign in to continue.</Text>
             </View>
 
-            <View style={{ flex: 2 }}>
+            <View style={{ flex: 1.85 }}>
                 <Text style={styles.body}>Email</Text>
                 <View style={styles.inputContainer}>
                     <TextInput
@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: "#38434D",
       padding: 5,
-      top: 100,
+      top: 90,
+      left: -5
     },
     body: {
         color: "#38434D",

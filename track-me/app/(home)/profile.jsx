@@ -78,7 +78,7 @@ export default function ProfilePage() {
         <Button onPress={handleLogout} 
                   mode="contained" buttonColor="#c5c5c5" style={ styles.signoutButton }>
                       Sign out</Button>
-        <View>
+        <View style={styles.profileContainer}>
           <Link href="../(profile)/profilecreationpage">
             <Text style={styles.editprofileContainer}>Edit Profile</Text>
           </Link>
@@ -129,6 +129,11 @@ const styles = StyleSheet.create({
     width: 140,
     height: 45,
   },
+  profileContainer: {
+    justifyContent: 'center',
+    alignItems: 'center', 
+    top: 15
+   },
   editprofileContainer: {
     color:'#8A8A8A',
     textAlign: 'center',

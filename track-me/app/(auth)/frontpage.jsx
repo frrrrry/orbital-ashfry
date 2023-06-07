@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    padding: 24,
   },
   main: {
     flex: 1,
@@ -40,7 +39,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 64,
     fontWeight: "bold",
-    margin: 10
+    margin: 10, 
+    textAlign: 'center'
   },
   subtitle: {
     fontSize: 36,

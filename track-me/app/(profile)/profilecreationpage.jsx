@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
       fontSize: 36,
       fontWeight: "bold",
       textAlign: "left",
-      top: 140,
+      top: 120,
     },
     body: {
         color: "#38434D",

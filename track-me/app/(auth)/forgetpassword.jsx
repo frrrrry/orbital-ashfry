@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   setWhite: {
     color:'white',
     fontSize: 14,
+    textAlign:"center"
   },
   backtosigninContainer: {
     backgroundColor: "#c5c5c5",
