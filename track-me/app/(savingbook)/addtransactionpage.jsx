@@ -10,6 +10,8 @@ import { addTransaction } from '../../firebase/firestore';
 export default function AddTransactionPage() {
   const navigation = useNavigation();
   const router = useRouter();
+  const platform = Platform.OS != 'ios';
+
   const { user } = useUserAuth();
   const [errMsg, setErrMsg] = useState('');
 
@@ -115,7 +117,7 @@ export default function AddTransactionPage() {
       </View>
 
       <View style={{ flex: 2.5 }}>
-        
+          {/* income and expense choosing - no border around the words when unselected */}
           {incomeshow === false && expenseshow === false &&
           <View style={{ flexDirection:"row" }}>
             <TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
@@ -129,6 +131,7 @@ export default function AddTransactionPage() {
             </TouchableOpacity>
           </View>}
 
+          {/* when user select income */}
           {incomeshow && expenseshow === false && 
           <View style={{ flexDirection:"row" }}>
             <TouchableOpacity activeOpacity={0.8} style={styles.incomeContainer} 
@@ -142,6 +145,7 @@ export default function AddTransactionPage() {
             </TouchableOpacity>
           </View>}
           
+          {/* when user select expense */}
           {incomeshow === false && expenseshow &&
           <View style={{ flexDirection:"row" }}>
             <TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
@@ -153,7 +157,9 @@ export default function AddTransactionPage() {
               <Text style={ styles.setRed }>Expense</Text>
             </TouchableOpacity>    
           </View>}
-          
+
+        {/* Android date picker */}
+        { platform && (
         <View style={{ flexDirection:"row", top: 30 }}>
           <View style={styles.displayContainer}>
             <Text style={styles.body}>Date</Text>
@@ -178,7 +184,29 @@ export default function AddTransactionPage() {
             )}
           </View>
         </View>
+        )}
+        
+        {/* ios date picker - removed the box that is around the date picker */}
+        { platform === false && (
+        <View style={{ flexDirection:"row", top: 30 }}>
+          <View style={styles.displayContainer}>
+            <Text style={styles.body}>Date</Text>
+          </View>
+          
+          <View style={{ left: -10 }}>
+            <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={'date'}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+            />
+          </View>
+        </View>
+        )}
 
+        {/* category dropdown box */}
         <View style={{ flexDirection:"row", top: 50 }}>
           <View style={styles.displayContainer}>
             <Text style={styles.body}>Category</Text>
@@ -198,9 +226,9 @@ export default function AddTransactionPage() {
             />
           </View>
         </View>
-      
+
+        {/* amount input */}
         <View style={{ flexDirection:"row", top: 80 }}>
-          
           <View style={styles.displayContainer}>
             <Text style={styles.body}>Amount</Text>
           </View>
@@ -215,8 +243,8 @@ export default function AddTransactionPage() {
           </View>
         </View>
 
+        {/* note input */}
         <View style={{ flexDirection:"row", top: 100  }}>
-          
           <View style={styles.displayContainer}>
             <Text style={styles.body}>Note</Text>
           </View>
@@ -230,6 +258,7 @@ export default function AddTransactionPage() {
           </View>
         </View>
 
+        {/* cancel and save button */}
         <View style={{ flexDirection:"row", top: 115 }}>
           <TouchableOpacity activeOpacity={0.8} style={styles.cancelContainer} 
             onPress={() => {navigation.goBack();}}>
@@ -244,6 +273,7 @@ export default function AddTransactionPage() {
           </TouchableOpacity>
         </View>
         {errMsg !== "" && <Text style={ {top: 80, left: 10} }>{errMsg}</Text>}
+      
       </View>
     </View>
   );
@@ -349,5 +379,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  input : {
+    padding: 5,
   },
 });

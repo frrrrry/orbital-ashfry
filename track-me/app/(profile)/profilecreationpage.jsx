@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, Image } from "react-native";
+import { StyleSheet, View, TextInput, Image, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { Text, Button } from "react-native-paper";
 import { useRouter } from "expo-router";
@@ -6,11 +6,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useUserAuth } from "../../context/auth";
 import { updateUserProfile } from '../../firebase/firestore';
 import { uploadImage } from '../../firebase/storage';
+import { useNavigation } from '@react-navigation/native';
 
 //not sure if this is correct
 import * as ImagePicker from 'expo-image-picker';
 
 export default function ProfileCreationPage() {
+    const navigation = useNavigation();
     const [image, setImage] = useState(null);
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
@@ -74,7 +76,6 @@ export default function ProfileCreationPage() {
                         ? <Image source={{ uri: image }} style={{ width: 100, height: 100, alignSelf: "center" }} />
                         : <Ionicons style={{ alignSelf: 'center' } } name="ios-person-circle-outline" size={100} color={'black'}/>
                         }
-
                     </View>
 
                     <Button onPress={pickImage} textColor="#8a8a8a">upload profile picture</Button>
@@ -100,12 +101,23 @@ export default function ProfileCreationPage() {
                         value={bio}
                         onChangeText={setBio} />
                 </View>
-                <View style={{ top: 20 }}>
-                    <Button onPress={handleSave} 
-                    mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer }>
-                        Save
-                    </Button>
-            </View>
+
+                <View style={{ flexDirection:"row"  }}>
+                    <TouchableOpacity activeOpacity={0.8} style={styles.cancelContainer} 
+                        onPress={() => {navigation.goBack();}}>
+                        <Text style={ styles.setWhite }>Cancel</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity></TouchableOpacity>
+
+                    <TouchableOpacity activeOpacity={0.8} style={styles.saveContainer} 
+                        onPress={handleSave}>
+                        <Text style={ styles.setWhite }>Save</Text>
+                    </TouchableOpacity> 
+          
+                </View>
+
+                
             </View>
         </View>
     )
@@ -142,5 +154,29 @@ const styles = StyleSheet.create({
         color: "#c5c5c5",
         width: 300,
         height: 45,
-   }
+   },
+   cancelContainer: {
+    backgroundColor: "#c5c5c5",
+    width: 140,
+    height: 45,
+    borderRadius: 20,
+    top: 30, 
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  saveContainer: {
+    backgroundColor: "#c5c5c5",
+    width: 140,
+    height: 45,
+    borderRadius: 20,
+    top: 30, 
+    left: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  setWhite: {
+    color:'white',
+    fontSize: 14,
+    textAlign:"center"
+  },
 });
