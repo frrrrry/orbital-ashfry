@@ -4,6 +4,7 @@ import { Text, Button, ActivityIndicator } from "react-native-paper";
 import { Link } from "expo-router";
 import { Icon } from '@rneui/themed'; 
 import { useUserAuth } from "../../context/auth";
+import { addUserProfile } from '../../firebase/firestore';
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -24,25 +25,32 @@ export default function RegisterPage() {
         setLoading(true);
 
         try {
-            await signUp(email, password)
-              .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('Registered with:', user.email);
-              })
-          } catch (err) {
-              if (err.message == "Firebase: Error (auth/invalid-email).") {
-                setErrMsg("Please enter a valid email");
-              }
-              else if (err.message == "Firebase: Password should be at least 6 characters (auth/weak-password).") {
-                setErrMsg("Password should be at least 6 characters");
-              }
-              else {
-                setErrMsg(err.message);
-              }
-              console.log(err.message);
+          await signUp(email, password)
+            .then(userCredential => {
+              const user = userCredential.user;
+              console.log('Registered with:', userCredential.user.email);
+              console.log("UID:", userCredential.user.uid);
+              addUserProfile(userCredential.user.uid);
+            })
+            
+        } catch (err) {
+          if (err.message == "Firebase: Error (auth/invalid-email).") {
+            setErrMsg("Please enter a valid email");
           }
-  
-          setLoading(false);
+          else if (err.message == "Firebase: Password should be at least 6 characters (auth/weak-password).") {
+            setErrMsg("Password should be at least 6 characters");
+          }
+          else if (err.message == "Firebase: Error (auth/email-already-in-use).") {
+            setErrMsg("Account already exist");
+          }
+          else {
+            setErrMsg(err.message);
+          }
+          console.log("here", err.message);
+        }
+        
+        setLoading(false);
+        
     }
     return (
         <View style={styles.container}>
@@ -52,7 +60,7 @@ export default function RegisterPage() {
                 <Text style={styles.subtitle}></Text>
             </View>
 
-            <View style={{ flex: 2 }}>
+            <View style={{ flex: 1.85 }}>
                 <Text style={styles.body}>Email</Text>
                 <View style={styles.inputContainer}>
                     <TextInput
