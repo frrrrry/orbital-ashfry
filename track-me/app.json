@@ -22,11 +22,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.ashfry.trackme"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }, 
+    },
     "plugins": [
       [
         "expo-image-picker",
@@ -34,6 +38,17 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a9b81890-38a0-40fb-8aae-4aa1d9bdc808"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a9b81890-38a0-40fb-8aae-4aa1d9bdc808"
+    }
   }
 }
