@@ -72,7 +72,7 @@ export default function ProfilePage() {
 
       </View>
 
-      <View style={{ flex: 1.3 }}>
+      <View style={{ flex: 0.7 }}>
         <StatusBar style="auto" />
 
         <Button onPress={handleLogout} 
