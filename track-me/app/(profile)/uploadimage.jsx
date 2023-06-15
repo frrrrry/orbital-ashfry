@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import UserPermissions from "./userpermissions";
 
 export default function UploadImage() {
+    UserPermissions(); 
+
     const [image, setImage] = useState(null);
 
     const addImage = async () => {
@@ -21,12 +24,12 @@ export default function UploadImage() {
     };
 
     return (
-        <View style={imageUploaderStyles.container}>
+        <View style={styles.container}>
             {
                 image  && <Image source={{ uri: image }} style={{ width: 150, height: 150 }} />
             }
-                <View style={imageUploaderStyles.uploadBtnContainer}>
-                    <TouchableOpacity onPress={addImage} style={imageUploaderStyles.uploadBtn} >
+                <View style={styles.uploadBtnContainer}>
+                    <TouchableOpacity onPress={addImage} style={styles.uploadBtn} >
                         <Text>{image ? 'Edit' : 'Upload'} Image</Text>
                         <AntDesign name="camera" size={15} color="black" />
                     </TouchableOpacity>
@@ -35,7 +38,7 @@ export default function UploadImage() {
   );
 }
 
-const imageUploaderStyles=StyleSheet.create({
+const styles = StyleSheet.create({
     container:{
         elevation:2,
         height:150,

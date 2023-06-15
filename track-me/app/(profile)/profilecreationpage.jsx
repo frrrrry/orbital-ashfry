@@ -9,6 +9,14 @@ import { useNavigation } from '@react-navigation/native';
 import UploadImage from "./uploadimage";
 
 export default function ProfileCreationPage() {
+    state = {
+        user: {
+            username: "",
+            bio: "",
+            avatar: null
+        }
+    };
+
     const navigation = useNavigation();
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
@@ -115,28 +123,28 @@ const styles = StyleSheet.create({
         width: 300,
         height: 45,
    },
-   cancelContainer: {
-    backgroundColor: "#c5c5c5",
-    width: 140,
-    height: 45,
-    borderRadius: 20,
-    top: 30, 
-    alignItems: 'center',
-    justifyContent: 'center',
+    cancelContainer: {
+        backgroundColor: "#c5c5c5",
+        width: 140,
+        height: 45,
+        borderRadius: 20,
+        top: 30, 
+        alignItems: 'center',
+        justifyContent: 'center',
   },
-  saveContainer: {
-    backgroundColor: "#c5c5c5",
-    width: 140,
-    height: 45,
-    borderRadius: 20,
-    top: 30, 
-    left: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    saveContainer: {
+        backgroundColor: "#c5c5c5",
+        width: 140,
+        height: 45,
+        borderRadius: 20,
+        top: 30, 
+        left: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
   },
-  setWhite: {
-    color:'white',
-    fontSize: 14,
-    textAlign:"center"
+    setWhite: {
+        color:'white',
+        fontSize: 14,
+        textAlign:"center"
   },
 });
