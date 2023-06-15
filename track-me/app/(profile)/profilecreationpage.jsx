@@ -5,30 +5,42 @@ import { useRouter } from "expo-router";
 import { useUserAuth } from "../../context/auth";
 import { updateUserProfile } from '../../firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-// import * as ImagePicker from 'expo-image-picker';
-import UploadImage from "./uploadimage";
+import * as ImagePicker from 'expo-image-picker';
+import { AntDesign } from '@expo/vector-icons';
+// import UserPermissions from "./userpermissions";
+// import UploadImage from "./uploadimage";
+import { uploadPhotoAsync, uploadImage } from "../../firebase/storage";
 
 export default function ProfileCreationPage() {
-    state = {
-        user: {
-            username: "",
-            bio: "",
-            avatar: null
-        }
-    };
-
     const navigation = useNavigation();
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
+    const [image, setImage] = useState(null);
     const [errMsg, setErrMsg] = useState('');
     const { user } = useUserAuth();
     const router = useRouter();
+
+    const addImage = async () => {
+        let img = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality: 1,
+        });
+        console.log(JSON.stringify(img));
+        
+        if (!img.cancelled) {
+            setImage(img.uri);
+        }
+    };
     
     const handleSave = async () => {
         setErrMsg('');
-    
+        
+        
+
         try {
-            await updateUserProfile(user.uid, username, bio);
+            await updateUserProfile(user.uid, username, bio, image);
         } catch (error) {
             setErrMsg(error.message)
             console.log("error message: ", error.message);
@@ -46,7 +58,18 @@ export default function ProfileCreationPage() {
 
             <View style={{ flex: 3 }}>
                 <View style={{padding: 10, alignContent: 'center', alignSelf: 'center' }}>
-                    <UploadImage/>
+                    <View style={ styles.imageContainer }>
+                        { 
+                            image && <Image source={{ uri: image }} style={{ width: 150, height: 150 }} />
+                        }
+                        <View style={styles.uploadBtnContainer}>
+                            <TouchableOpacity onPress={addImage} style={styles.uploadBtn}>
+                                <Text>{ image ? 'Edit' : 'Upload'} Image</Text>
+                                <AntDesign name="camera" size={15} color="black" />
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
                 </View>
 
                 <Text style={styles.body}>Username</Text>
@@ -95,6 +118,29 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: "center",
+    },
+    imageContainer:{
+        elevation:2,
+        height:150,
+        width:150,
+        backgroundColor:'#efefef',
+        position:'relative',
+        borderRadius:999,
+        overflow:'hidden',
+    },
+    uploadBtnContainer:{
+        opacity:0.7,
+        position:'absolute',
+        right:0,
+        bottom:0,
+        backgroundColor:'lightgrey',
+        width:'100%',
+        height:'25%',
+    },
+    uploadBtn:{
+        display:'flex',
+        alignItems:"center",
+        justifyContent:'center'
     },
     title: {  
       fontSize: 36,
