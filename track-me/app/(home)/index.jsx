@@ -40,10 +40,10 @@ export default function App() {
         </View>
         <View >
           <Text style={styles.user}>
-          {showUser.map((user) => (
-            <Text style={styles.displayText} 
-            key={showUser.id}>{user.username}</Text>
-          ))}
+            {showUser.map((user) => (
+              <Text style={styles.displayText} 
+              key={showUser.id}>{user.username}</Text>
+            ))}
           </Text>
         </View>
       </View>
