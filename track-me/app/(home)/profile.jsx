@@ -45,7 +45,7 @@ export default function ProfilePage() {
         <View>
           <TouchableOpacity style={ styles.avatarContainer }>
           <Image style={ styles.avatar } />
-            <AntDesign style={{ alignSelf: 'center' } } name="user" size={60} color="#8A8A8A"/>
+            <AntDesign style={{ alignSelf: 'center' }} name="user" size={60} color="#8A8A8A"/>
           </TouchableOpacity>
         </View>
 
