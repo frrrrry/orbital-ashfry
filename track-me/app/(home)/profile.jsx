@@ -7,10 +7,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getUser } from '../../firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
+import { firebase } from "../../firebase/firebase";
 
 export default function ProfilePage() {
   const { logOut, user } = useUserAuth();
+  const [ avatarUrl, setAvatarUrl ] = useState('');
 
   const handleLogout = async () => {
     try {
@@ -35,6 +37,14 @@ export default function ProfilePage() {
     loadData();
   }, [isFocused]);
 
+  let imageRef = firebase.storage().ref('/' + user.uid);
+  imageRef
+    .getDownloadURL()
+    .then((url) => {
+      setAvatarUrl(url); 
+    })
+    .catch((err) => console.log('getting downloadUrl of image error => ', err));
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.9 }}>
@@ -44,8 +54,11 @@ export default function ProfilePage() {
       <View style={{ flex: 1 }}>
         <View>
           <TouchableOpacity style={ styles.avatarContainer }>
-          <Image style={ styles.avatar } />
-            <AntDesign style={{ alignSelf: 'center' }} name="user" size={60} color="#8A8A8A"/>
+          <Image 
+            style={ styles.avatar } 
+            source={{ uri: avatarUrl }}
+          />
+            {/*<AntDesign style={{ alignSelf: 'center' }} name="user" size={60} color="#8A8A8A"/>*/}
           </TouchableOpacity>
         </View>
 

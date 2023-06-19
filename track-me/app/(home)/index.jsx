@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, SafeAreaView, FlatList } from 'react-native';
 import { Text, Button } from "react-native-paper";
 import React, { useState, useEffect } from 'react';
 import { useUserAuth } from "../../context/auth";
 import { useIsFocused } from '@react-navigation/native';
 import { getUser } from '../../firebase/firestore';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { FlatListComponent } from './components/flatlistcomponent';
 import { auth } from '../../firebase/firebase'
 
 export default function App() {
@@ -39,7 +39,7 @@ export default function App() {
           </Text>
         </View>
         <View >
-          <Text style={styles.user}>
+          <Text style={styles.username}>
             {showUser.map((user) => (
               <Text style={styles.displayText} 
               key={showUser.id}>{user.username}</Text>
@@ -56,6 +56,9 @@ export default function App() {
           })}
         </Text>
       </View>
+      <View style={styles.flatListContainer}>
+          <FlatListComponent />
+      </View>
     </View>
   );
 }
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
   },
   titleContainer: {
     flex: 1,
@@ -74,21 +78,25 @@ const styles = StyleSheet.create({
     top: 100,
   },
   title: {
-    fontSize: 30, 
+    fontSize: 28, 
     fontWeight: "bold",
     textAlign: "center",
     justifyContent: 'flex-start',
   },  
-  user: {
-    fontSize: 30,
+  username: {
+    fontSize: 28,
     fontWeight: "bold",
     textAlign: "center",
     justifyContent: 'flex-end',
   },
   dateContainer: {
-    flex: 2.5,
+    flex: 2,
+    // justifyContent: 'flex-start'
   },  
   date: {
-    fontSize: 20, 
+    fontSize: 18, 
   },
+  flatListContainer: {
+    flex: 1,
+  }, 
 });

@@ -7,15 +7,14 @@ import { updateUserProfile } from '../../firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
-// import UserPermissions from "./userpermissions";
-// import UploadImage from "./uploadimage";
-import { uploadPhotoAsync, uploadImage } from "../../firebase/storage";
+import { firebase } from "../../firebase/firebase";
 
 export default function ProfileCreationPage() {
     const navigation = useNavigation();
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
     const [image, setImage] = useState(null);
+    const [uploading, setUploading] = useState(false); 
     const [errMsg, setErrMsg] = useState('');
     const { user } = useUserAuth();
     const router = useRouter();
@@ -32,12 +31,56 @@ export default function ProfileCreationPage() {
         if (!img.cancelled) {
             setImage(img.uri);
         }
-    };
-    
+    }
+
+    const uploadImage = async (image, avatarName) => {
+        const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest()
+          xhr.onload = function() {
+            resolve(xhr.response);
+          };
+          xhr.onerror = function() {
+            reject(new TypeError('Network request failed'));
+          };
+          xhr.responseType = 'blob';
+          xhr.open('GET', image, true);
+          xhr.send(null);
+        })
+        const ref = firebase.storage().ref().child(avatarName)
+        const snapshot = ref.put(blob);
+        snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {
+            setUploading(true)
+          },
+          (error) => {
+            setUploading(false)
+            console.log(error)
+            blob.close()
+            return 
+          },
+          () => {
+            snapshot.snapshot.ref.getDownloadURL().then((url) => {
+              setUploading(false)
+              console.log("Download URL: ", url)
+              setImage(url)
+              blob.close()
+              return url
+            })
+          }
+        )
+    }
+
     const handleSave = async () => {
         setErrMsg('');
         
-        
+        try {
+            await uploadImage(image, user.uid); 
+        } catch (error) {
+            setErrMsg(error.message)
+            console.log("error message: ", error.message);
+            console.log("uid:", user.uid);
+            console.log('error due to image');
+        }
 
         try {
             await updateUserProfile(user.uid, username, bio, image);
@@ -64,7 +107,7 @@ export default function ProfileCreationPage() {
                         }
                         <View style={styles.uploadBtnContainer}>
                             <TouchableOpacity onPress={addImage} style={styles.uploadBtn}>
-                                <Text>{ image ? 'Edit' : 'Upload'} Image</Text>
+                                <Text style={{ fontSize: 12, }}>{ image ? 'Edit' : 'Upload'} Image</Text>
                                 <AntDesign name="camera" size={15} color="black" />
                             </TouchableOpacity>
                         </View>

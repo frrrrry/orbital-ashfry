@@ -18,7 +18,6 @@ export function updateUserProfile(uid, username, bio, avatar ) {
   
 }
 
-
 export async function getUser(uid) {
   const userDetails = query(collection(db, USERS_COLLECTION), where("uid", "==", uid));
   const snapshot = await getDocs(userDetails);
