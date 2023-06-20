@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Text, Button } from "react-native-paper";
 import { Link } from "expo-router";
 import { useUserAuth } from "../../context/auth";
@@ -7,9 +7,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getUser } from '../../firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
+import { firebase } from "../../firebase/firebase";
 
 export default function ProfilePage() {
   const { logOut, user } = useUserAuth();
+  const [ avatarUrl, setAvatarUrl ] = useState('');
 
   const handleLogout = async () => {
     try {
@@ -34,16 +37,29 @@ export default function ProfilePage() {
     loadData();
   }, [isFocused]);
 
+  let imageRef = firebase.storage().ref('/' + user.uid);
+  imageRef
+    .getDownloadURL()
+    .then((url) => {
+      setAvatarUrl(url); 
+    })
+    .catch((err) => console.log('getting downloadUrl of image error => ', err));
+
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 0.9 }}>
         <Text style={styles.title}>User Profile</Text>
       </View>
  
       <View style={{ flex: 1 }}>
         <View>
-          <Ionicons style={{ alignSelf: 'center' } } name="ios-person-circle-outline" size={100} color={'black'}/>
-        
+          <TouchableOpacity style={ styles.avatarContainer }>
+          <Image 
+            style={ styles.avatar } 
+            source={{ uri: avatarUrl }}
+          />
+            {/*<AntDesign style={{ alignSelf: 'center' }} name="user" size={60} color="#8A8A8A"/>*/}
+          </TouchableOpacity>
         </View>
 
         <View style={ styles.display }>
@@ -72,7 +88,7 @@ export default function ProfilePage() {
 
       </View>
 
-      <View style={{ flex: 1.3 }}>
+      <View style={{ flex: 0.7 }}>
         <StatusBar style="auto" />
 
         <Button onPress={handleLogout} 
@@ -98,6 +114,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  avatarContainer: {
+    width: 100,
+    height: 100,
+    backgroundColor: "#E1E2E6",
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center'
+  },
+  avatar: {
+    position: 'absolute',
+    width: 100,
+    height: 100,
+    backgroundColor: "#E1E2E6",
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center'
+  },
   title: {  
     fontSize: 36,
     fontWeight: "bold",
@@ -111,17 +146,19 @@ const styles = StyleSheet.create({
     color: "#8A8A8A",
   },
   displayText : {
-    width: 120,
+    width: 100,
     height: 45,
     fontSize: 18,
   },
-    display : {
-      flexDirection: 'row',
-      height: 40,
-      width: 300,
-      padding: 10,
-      left: 20,
-      top: 20
+  display : {
+    flexDirection: 'row',
+    marginTop: 5,
+    height: 50,
+    width: 300,
+    padding: 10,
+    left: 20,
+    top: 20,
+  
   },
   signoutButton: {
     justifyContent: 'center',

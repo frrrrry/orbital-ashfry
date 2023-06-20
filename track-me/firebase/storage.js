@@ -1,7 +1,8 @@
 //import { format } from 'date-fns';
 import { deleteObject, getDownloadURL as getStorageDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage } from './firebase';
+import { firebase, storage } from './firebase';
 
+/*
 // Bucket URL from Storage in Firebase Console
 const BUCKET_URL = "gs://ashfry-track-me.appspot.com";
  
@@ -27,3 +28,4 @@ export async function deleteImage(bucket) {
 export async function getDownloadURL(bucket) {
   return await getStorageDownloadURL(ref(storage, bucket));
 }
+*/

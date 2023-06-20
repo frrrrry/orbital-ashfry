@@ -1,5 +1,5 @@
 import { setDoc, addDoc, collection, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore'; 
-import { db } from './firebase';
+import { db, storage } from './firebase';
 import { getDownloadURL } from './storage';
 
 // Name of collection in Firestore
@@ -8,11 +8,14 @@ const TRANSACTION_COLLECTION = 'transactions'
  
 // Adds new user profile to Firestore with null values
 export function addUserProfile(uid) {
-  setDoc(doc(db, USERS_COLLECTION, uid), { uid, username: "", bio: ""});
+  setDoc(doc(db, USERS_COLLECTION, uid), { uid, username: "", bio: "", avatar: null });
 }
 
-export function updateUserProfile(uid, username, bio ) {
-  updateDoc(doc(db, USERS_COLLECTION, uid), { username, bio });
+export function updateUserProfile(uid, username, bio, avatar ) {
+  updateDoc(doc(db, USERS_COLLECTION, uid), { username, bio, avatar });
+
+  let _db = USERS_COLLECTION.doc(uid);
+  
 }
 
 export async function getUser(uid) {
@@ -26,6 +29,7 @@ export async function getUser(uid) {
       ...users, 
       username: users['username'], 
       bio: users['bio'],
+      avatar: users['avatar'],
     });
   }
   return allDetails;
