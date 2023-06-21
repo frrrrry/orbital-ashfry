@@ -1,4 +1,4 @@
-import { setDoc, addDoc, collection, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore'; 
+import { setDoc, addDoc, collection, doc, getDocs, orderBy, query, updateDoc, where, deleteDoc } from 'firebase/firestore'; 
 import { db, storage } from './firebase';
 import { getDownloadURL } from './storage';
 
@@ -58,7 +58,12 @@ export async function getTransactions(uid) {
   return allTransactions;
 }
 
-// update specific transaction in Firestore
+// update specific transaction with given id
 export function updateTransaction(id, type, date, category, amount, note ) {
   updateDoc(doc(db, TRANSACTION_COLLECTION, id), { type, date, category, amount, note });
+}
+
+// Deletes transactions with given id.
+export function deleteTransaction(id) {
+  deleteDoc(doc(db, TRANSACTION_COLLECTION, id));
 }

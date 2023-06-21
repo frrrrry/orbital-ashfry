@@ -5,28 +5,30 @@ import { useNavigation } from '@react-navigation/native';
 import { useRouter } from "expo-router";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { updateTransaction } from '../../firebase/firestore';
+import { updateTransaction, deleteTransaction } from '../../firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Link } from "expo-router";
 
 export default function EditTransactionPage() {
-    const isFocused = useIsFocused();
+  const isFocused = useIsFocused();
 
-    const [transactionid, setTransactionid] = useState('');
+  const [transactionid, setTransactionid] = useState('');
 
-    useEffect(() => {
-        const getValueFunction = () => {
-            // Function to get the value from AsyncStorage
-            AsyncStorage.getItem('transactionid').then(
-            (value) =>
-                setTransactionid(value),
-            );
-        
-        };
-        getValueFunction();
-    }, [isFocused]);
+  useEffect(() => {
+    const getValueFunction = () => {
+        // Function to get the value from AsyncStorage
+        AsyncStorage.getItem('transactionid').then(
+        (value) =>
+            setTransactionid(value),
+        );
+    
+    };
+    getValueFunction();
+  }, [isFocused]);
 
-    console.log("transactionid", transactionid);
+  console.log("transactionid", transactionid);
 
   const navigation = useNavigation();
   const router = useRouter();
@@ -121,9 +123,27 @@ export default function EditTransactionPage() {
 
   //console.log(typeof amount);
 
+  const handleDelete = async () => {
+    setErrMsg('');
+
+    try {
+      await deleteTransaction(transactionid)
+    } catch (error) {
+      setErrMsg(error.message)
+      console.log("error message: ", error.message);
+    }
+    router.push("../(home)/savingbook");
+  }
+
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 0.2, top: 50, left: -150 }}>
+        <Link href="../savingbook">
+          <Ionicons name="arrow-back" size={50} color={'black'}/>
+        </Link>
+      </View>
+      
+      <View style={{ flex: 0.8, top: -30 }}>
         <Text style={styles.title}>Edit Transaction</Text>
       </View>
 
@@ -269,11 +289,11 @@ export default function EditTransactionPage() {
           </View>
         </View>
 
-        {/* cancel and save button */}
+        {/* delete and save button */}
         <View style={{ flexDirection:"row", top: 115 }}>
           <TouchableOpacity activeOpacity={0.8} style={styles.cancelContainer} 
-            onPress={() => {navigation.goBack();}}>
-            <Text style={ styles.setWhite }>Cancel</Text>
+            onPress={handleDelete}>
+            <Text style={ styles.setWhite }>Delete</Text>
           </TouchableOpacity>
 
           <TouchableOpacity></TouchableOpacity>

@@ -6,7 +6,9 @@ import { useRouter } from "expo-router";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { addTransaction } from '../../firebase/firestore';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Link } from "expo-router";
+ 
 export default function AddTransactionPage() {
   const navigation = useNavigation();
   const router = useRouter();
@@ -112,7 +114,13 @@ export default function AddTransactionPage() {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 0.2, top: 50, left: -150 }}>
+        <Link href="../savingbook">
+          <Ionicons name="arrow-back" size={50} color={'black'}/>
+        </Link>
+      </View>
+      
+      <View style={{ flex: 0.8, top: -30 }}>
         <Text style={styles.title}>Add Transaction</Text>
       </View>
 
@@ -258,14 +266,9 @@ export default function AddTransactionPage() {
           </View>
         </View>
 
-        {/* cancel and save button */}
+        {/* save button */}
         <View style={{ flexDirection:"row", top: 115 }}>
-          <TouchableOpacity activeOpacity={0.8} style={styles.cancelContainer} 
-            onPress={() => {navigation.goBack();}}>
-            <Text style={ styles.setWhite }>Cancel</Text>
-          </TouchableOpacity>
 
-          <TouchableOpacity></TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.8} style={styles.saveContainer} 
             onPress={handleSave}>
@@ -335,7 +338,7 @@ const styles = StyleSheet.create({
   },
   saveContainer: {
     backgroundColor: "#c5c5c5",
-    width: 140,
+    width: 300,
     height: 45,
     padding: 15,
     borderRadius: 20,
