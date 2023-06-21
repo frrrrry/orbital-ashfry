@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, RefreshControl } from 'react-native';
 import { Text, Button } from "react-native-paper";
 import { Link } from "expo-router";
 import { useUserAuth } from "../../context/auth";
@@ -13,6 +13,7 @@ import { firebase } from "../../firebase/firebase";
 export default function ProfilePage() {
   const { logOut, user } = useUserAuth();
   const [ avatarUrl, setAvatarUrl ] = useState('');
+  const [ refreshing, setRefreshing ] = useState(false);
 
   const handleLogout = async () => {
     try {

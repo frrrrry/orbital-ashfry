@@ -32,8 +32,8 @@ export default function ProfileCreationPage() {
             setImage(img.uri);
         }
     }
-
-    const uploadImage = async (image, avatarName) => {
+    
+    const uploadImage = async (imageUri, avatarName) => {
         const blob = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest()
           xhr.onload = function() {
@@ -43,7 +43,7 @@ export default function ProfileCreationPage() {
             reject(new TypeError('Network request failed'));
           };
           xhr.responseType = 'blob';
-          xhr.open('GET', image, true);
+          xhr.open('GET', imageUri, true);
           xhr.send(null);
         })
         const ref = firebase.storage().ref().child(avatarName)
@@ -69,7 +69,7 @@ export default function ProfileCreationPage() {
           }
         )
     }
-
+    
     const handleSave = async () => {
         setErrMsg('');
         

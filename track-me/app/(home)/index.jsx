@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useUserAuth } from "../../context/auth";
 import { useIsFocused } from '@react-navigation/native';
 import { getUser } from '../../firebase/firestore';
-import { FlatListComponent } from './components/flatlistcomponent';
+import { FlatListComponent } from '../components/FlatListComponent';
 import { auth } from '../../firebase/firebase'
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
   //to auto update the username and bio
   const isFocused = useIsFocused();
 
-  //get data from firebase
+  // get data from firebase
   useEffect(() => {
     const loadData = async () => {
       const result = await getUser(user.uid);
@@ -56,9 +56,7 @@ export default function App() {
           })}
         </Text>
       </View>
-      <View style={styles.flatListContainer}>
-          <FlatListComponent />
-      </View>
+      <FlatListComponent style={styles.flatListContainer} />
     </View>
   );
 }
@@ -66,16 +64,17 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    //backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    top: 100,
   },
   titleContainer: {
-    flex: 1,
+    flex: 0.2,
     justifyContent: 'center',
     flexDirection: 'row',
-    top: 100,
+    //top: 100,
   },
   title: {
     fontSize: 28, 
@@ -90,13 +89,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   dateContainer: {
-    flex: 2,
+    flex: 1,
     // justifyContent: 'flex-start'
   },  
   date: {
     fontSize: 18, 
   },
   flatListContainer: {
-    flex: 1,
+    flex: 3,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
   }, 
 });
