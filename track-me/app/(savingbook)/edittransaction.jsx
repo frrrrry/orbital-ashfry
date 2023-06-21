@@ -1,13 +1,33 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, Platform } from 'react-native';
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { useUserAuth } from "../../context/auth";
 import { useNavigation } from '@react-navigation/native';
 import { useRouter } from "expo-router";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { addTransaction } from '../../firebase/firestore';
+import { updateTransaction } from '../../firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
-export default function AddTransactionPage() {
+export default function EditTransactionPage() {
+    const isFocused = useIsFocused();
+
+    const [transactionid, setTransactionid] = useState('');
+
+    useEffect(() => {
+        const getValueFunction = () => {
+            // Function to get the value from AsyncStorage
+            AsyncStorage.getItem('transactionid').then(
+            (value) =>
+                setTransactionid(value),
+            );
+        
+        };
+        getValueFunction();
+    }, [isFocused]);
+
+    console.log("transactionid", transactionid);
+
   const navigation = useNavigation();
   const router = useRouter();
   const platform = Platform.OS != 'ios';
@@ -82,14 +102,14 @@ export default function AddTransactionPage() {
       return;
     }
     if (amount <= 0) {
-      setErrMsg("Amount cannot be empty")
+      setErrMsg("Amount must be more than 0")
       return;
     }
 
     //wanted to make amount into int but in firebase it is still saved as string
     setAmount(parseInt(amount)); 
     try {
-      await addTransaction(user.uid, type, date, category, amount, note);
+      await updateTransaction(transactionid, type, date, category, amount, note )
     } catch (error) {
       setErrMsg(error.message)
       console.log("error message: ", error.message);
@@ -99,21 +119,12 @@ export default function AddTransactionPage() {
     router.push("../(home)/savingbook");
   }
 
-  /*
-  console.log("-----------------------------");
-  console.log("type", type);
-  console.log("display date", displayDate);
-  console.log("category", category);
-  console.log("amount", amount);
-  console.log("note", note);
-  console.log("date", date);
-  console.log(typeof amount);
-  */
+  //console.log(typeof amount);
 
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>Add Transaction</Text>
+        <Text style={styles.title}>Edit Transaction</Text>
       </View>
 
       <View style={{ flex: 2.5 }}>

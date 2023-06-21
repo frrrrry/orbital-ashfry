@@ -1,6 +1,6 @@
 import { StyleSheet, View, TextInput, Image, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { Text, Button } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useUserAuth } from "../../context/auth";
 import { updateUserProfile } from '../../firebase/firestore';
