@@ -3,12 +3,13 @@ import { StyleSheet, View, Image, TouchableOpacity, RefreshControl } from 'react
 import { Text, Button } from "react-native-paper";
 import { Link } from "expo-router";
 import { useUserAuth } from "../../context/auth";
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { getUser } from '../../firebase/firestore';
+import { addUserProfile, getUser } from '../../firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { firebase } from "../../firebase/firebase";
+import nulluseravatar from "../../assets/nulluseravatar.png";
+import { set } from 'date-fns';
 
 export default function ProfilePage() {
   const { logOut, user } = useUserAuth();
@@ -37,15 +38,36 @@ export default function ProfilePage() {
     };
     loadData();
   }, [isFocused]);
+  
+  /*
+  if (avatarUrl == '' && user.avatar == null) {
+    console.log('when profile is not updated');
+    console.log(avatarUrl);
+    const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
+    setAvatarUrl(nullAvatar);
+  } 
+  */
 
   let imageRef = firebase.storage().ref('/' + user.uid);
   imageRef
     .getDownloadURL()
     .then((url) => {
-      setAvatarUrl(url); 
+    setAvatarUrl(url); 
     })
     .catch((err) => console.log('getting downloadUrl of image error => ', err));
 
+  /*
+  // to delete image from firebase storage
+  const deleteImage = () => {
+    imageRef
+    .delete()
+    .then(() => {
+      console.log(`${imageName}has been deleted successfully.`);
+    })
+    .catch((err) => console.log('error on image deletion => ', err));
+  }
+  */
+ 
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.9 }}>
@@ -57,7 +79,7 @@ export default function ProfilePage() {
           <TouchableOpacity style={ styles.avatarContainer }>
           <Image 
             style={ styles.avatar } 
-            source={{ uri: avatarUrl }}
+            source={{ uri : avatarUrl }}
           />
             {/*<AntDesign style={{ alignSelf: 'center' }} name="user" size={60} color="#8A8A8A"/>*/}
           </TouchableOpacity>

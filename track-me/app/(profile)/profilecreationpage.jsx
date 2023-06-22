@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 import { firebase } from "../../firebase/firebase";
+import nulluseravatar from "../../assets/nulluseravatar.png";
 
 export default function ProfileCreationPage() {
     const navigation = useNavigation();
@@ -34,6 +35,10 @@ export default function ProfileCreationPage() {
     }
     
     const uploadImage = async (imageUri, avatarName) => {
+        if (imageUri == '') {
+            const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
+            setImage(nullAvatar);
+        } 
         const blob = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest()
           xhr.onload = function() {
@@ -69,7 +74,7 @@ export default function ProfileCreationPage() {
           }
         )
     }
-    
+
     const handleSave = async () => {
         setErrMsg('');
         
