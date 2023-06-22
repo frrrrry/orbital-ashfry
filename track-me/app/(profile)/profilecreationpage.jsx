@@ -104,7 +104,7 @@ export default function ProfileCreationPage() {
     return (
         <View style={styles.container}>
             <View style={{ flex: 1 }}>
-                <Text style={styles.title}>User Profile</Text>
+                <Text style={styles.title}>Edit Profile</Text>
             </View>
 
             <View style={{ flex: 3 }}>

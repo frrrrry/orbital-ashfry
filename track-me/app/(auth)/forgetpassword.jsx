@@ -116,13 +116,13 @@ const styles = StyleSheet.create({
   },
   setWhite: {
     color:'white',
-    fontSize: 14,
+    fontSize: 12,
     textAlign:"center"
   },
   backtosigninContainer: {
     backgroundColor: "#c5c5c5",
     width: 140,
-    height: 45,
+    height: 50,
     padding: 15,
     borderRadius: 20,
     top: 30, 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   resetpasswordContainer: {
     backgroundColor: "#c5c5c5",
     width: 140,
-    height: 45,
+    height: 50,
     padding: 15,
     borderRadius: 20,
     top: 30, 

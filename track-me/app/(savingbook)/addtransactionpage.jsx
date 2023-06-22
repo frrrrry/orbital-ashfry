@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   saveContainer: {
     backgroundColor: "#c5c5c5",
     width: 300,
-    height: 45,
+    height: 50,
     padding: 15,
     borderRadius: 20,
     top: 30, 
