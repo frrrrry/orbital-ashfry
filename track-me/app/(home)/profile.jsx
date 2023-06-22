@@ -37,24 +37,17 @@ export default function ProfilePage() {
       setShowUser(result);
     };
     loadData();
-  }, [isFocused]);
-  
-  /*
-  if (avatarUrl == '' && user.avatar == null) {
-    console.log('when profile is not updated');
-    console.log(avatarUrl);
-    const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
-    setAvatarUrl(nullAvatar);
-  } 
-  */
 
-  let imageRef = firebase.storage().ref('/' + user.uid);
-  imageRef
-    .getDownloadURL()
-    .then((url) => {
-    setAvatarUrl(url); 
-    })
-    .catch((err) => console.log('getting downloadUrl of image error => ', err));
+    let imageRef = firebase.storage().ref('/' + user.uid);
+    if (imageRef) {
+      imageRef
+      .getDownloadURL()
+      .then((url) => {
+      setAvatarUrl(url); 
+      })
+      .catch((err) => console.log('getting downloadUrl of image error => ', err));
+    }
+  }, [isFocused]);
 
   /*
   // to delete image from firebase storage
@@ -157,7 +150,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   title: {  
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: "bold",
     textAlign: "left",
     top: 140,

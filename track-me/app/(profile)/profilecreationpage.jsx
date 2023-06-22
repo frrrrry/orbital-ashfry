@@ -14,7 +14,7 @@ export default function ProfileCreationPage() {
     const navigation = useNavigation();
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
     const [uploading, setUploading] = useState(false); 
     const [errMsg, setErrMsg] = useState('');
     const { user } = useUserAuth();
@@ -35,10 +35,8 @@ export default function ProfileCreationPage() {
     }
     
     const uploadImage = async (imageUri, avatarName) => {
-        if (imageUri == '') {
-            const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
-            setImage(nullAvatar);
-        } 
+        console.log(imageUri);
+
         const blob = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest()
           xhr.onload = function() {
@@ -79,7 +77,12 @@ export default function ProfileCreationPage() {
         setErrMsg('');
         
         try {
-            await uploadImage(image, user.uid); 
+            if (image != '') {
+                await uploadImage(image, user.uid);
+            } else {
+                const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
+                await uploadImage(nullAvatar, user.uid);
+            }
         } catch (error) {
             setErrMsg(error.message)
             console.log("error message: ", error.message);
@@ -191,7 +194,7 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     title: {  
-      fontSize: 36,
+      fontSize: 32,
       fontWeight: "bold",
       textAlign: "left",
       top: 120,
