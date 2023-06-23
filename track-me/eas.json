@@ -13,9 +13,9 @@
       },
       "channel": "preview2"
     },
-    "preview3": {
+    "development": {
       "developmentClient": true,
-      "channel": "preview3"
+      "distribution": "internal"
     },
     "production": {
       "channel": "production"
