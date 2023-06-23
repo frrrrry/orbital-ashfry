@@ -12,8 +12,9 @@ import nulluseravatar from "../../assets/nulluseravatar.png";
 import { set } from 'date-fns';
 
 export default function ProfilePage() {
+  const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
   const { logOut, user } = useUserAuth();
-  const [ avatarUrl, setAvatarUrl ] = useState('');
+  const [ avatarUrl, setAvatarUrl ] = useState(nullAvatar);
   const [ refreshing, setRefreshing ] = useState(false);
 
   const handleLogout = async () => {
@@ -46,7 +47,7 @@ export default function ProfilePage() {
       setAvatarUrl(url); 
       })
       .catch((err) => console.log('getting downloadUrl of image error => ', err));
-    }
+    } 
   }, [isFocused]);
 
   /*
