@@ -8,12 +8,13 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 import { firebase } from "../../firebase/firebase";
+import nulluseravatar from "../../assets/nulluseravatar.png";
 
 export default function ProfileCreationPage() {
     const navigation = useNavigation();
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
     const [uploading, setUploading] = useState(false); 
     const [errMsg, setErrMsg] = useState('');
     const { user } = useUserAuth();
@@ -34,6 +35,8 @@ export default function ProfileCreationPage() {
     }
     
     const uploadImage = async (imageUri, avatarName) => {
+        console.log(imageUri);
+
         const blob = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest()
           xhr.onload = function() {
@@ -69,12 +72,17 @@ export default function ProfileCreationPage() {
           }
         )
     }
-    
+
     const handleSave = async () => {
         setErrMsg('');
         
         try {
-            await uploadImage(image, user.uid); 
+            if (image != '') {
+                await uploadImage(image, user.uid);
+            } else {
+                const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
+                await uploadImage(nullAvatar, user.uid);
+            }
         } catch (error) {
             setErrMsg(error.message)
             console.log("error message: ", error.message);
@@ -96,7 +104,7 @@ export default function ProfileCreationPage() {
     return (
         <View style={styles.container}>
             <View style={{ flex: 1 }}>
-                <Text style={styles.title}>User Profile</Text>
+                <Text style={styles.title}>Edit Profile</Text>
             </View>
 
             <View style={{ flex: 3 }}>
@@ -186,7 +194,7 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     title: {  
-      fontSize: 36,
+      fontSize: 32,
       fontWeight: "bold",
       textAlign: "left",
       top: 120,

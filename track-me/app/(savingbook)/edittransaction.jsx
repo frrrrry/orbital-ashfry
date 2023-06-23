@@ -139,7 +139,7 @@ export default function EditTransactionPage() {
     <View style={styles.container}>
       <View style={{ flex: 0.2, top: 50, left: -150 }}>
         <Link href="../savingbook">
-          <Ionicons name="arrow-back" size={50} color={'black'}/>
+          <Ionicons name="arrow-back" size={40} color={'black'}/>
         </Link>
       </View>
       
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {  
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: "bold",
     textAlign: "left",
     top: 100,
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
   cancelContainer: {
     backgroundColor: "#c5c5c5",
     width: 140,
-    height: 45,
+    height: 50,
     padding: 15,
     borderRadius: 20,
     top: 30, 
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
   saveContainer: {
     backgroundColor: "#c5c5c5",
     width: 140,
-    height: 45,
+    height: 50,
     padding: 15,
     borderRadius: 20,
     top: 30, 
