@@ -23,8 +23,13 @@ export default function App() {
   // get data from firebase
   useEffect(() => {
     const loadData = async () => {
-      const result = await getUser(user.uid);
-      setUsername(result[0].username);
+      try {
+        const result = await getUser(user.uid);
+        setUsername(result[0].username);
+      } catch (error) {
+        // if no such uid exists
+        console.log(error);
+      }
     };
     loadData();
   }, [isFocused]);

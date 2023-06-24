@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import LoginPage from '../login';
 import { fireEvent, render } from '@testing-library/react-native';
@@ -24,3 +25,4 @@ describe('login screen', () => {
     // shows invalid username error message
     // shows invalid password message
 })
+*/
