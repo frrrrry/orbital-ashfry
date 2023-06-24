@@ -27,6 +27,7 @@ export async function getUser(uid) {
       username: users['username'], 
       bio: users['bio'],
       avatar: users['avatar'],
+      uid: users['uid']
     });
   }
   return allDetails;
