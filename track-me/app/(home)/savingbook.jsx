@@ -73,10 +73,14 @@ export default function SavingBookPage() {
       <View style={{ flex: 4.2 }}>
         <SafeAreaView style={styles.contentContainer}>
           <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
-          { transactions.map((transaction) => (
-            <TransactionRow transaction={transaction} />
+          
+          {transactions.map((transaction) => (
+            <View key={transaction.id}>
+              <TransactionRow transaction={transaction} />
+            </View>
           )
           )}
+          
           </ScrollView>
         </SafeAreaView>
       </View>

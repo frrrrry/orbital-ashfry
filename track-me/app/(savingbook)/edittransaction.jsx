@@ -88,7 +88,7 @@ export default function EditTransactionPage() {
   const [items, setItems] = useState([
     {label: 'Food', value: 'Food'},
     {label: 'Shopping', value: 'Shopping'},
-    {label: 'Transportation', value: 'Transportation'},
+    {label: 'Transport', value: 'Transport'},
     {label: 'Education', value: 'Education'},
     {label: 'Others', value: 'Others'}
   ]);
@@ -101,6 +101,10 @@ export default function EditTransactionPage() {
     }
     if (category == '') {
       setErrMsg("Category cannot be empty")
+      return;
+    }
+    if (amount == 0) {
+      setErrMsg("Amount cannot be empty")
       return;
     }
     if (amount <= 0) {
@@ -269,7 +273,7 @@ export default function EditTransactionPage() {
               style={styles.input}
               autoCapitalize='none'
               keyboardType = 'numeric'
-              value={amount}
+              value={String(amount)}
               onChangeText={setAmount} />
           </View>
         </View>

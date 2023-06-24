@@ -68,7 +68,7 @@ export default function AddTransactionPage() {
   const [items, setItems] = useState([
     {label: 'Food', value: 'Food'},
     {label: 'Shopping', value: 'Shopping'},
-    {label: 'Transportation', value: 'Transportation'},
+    {label: 'Transport', value: 'Transport'},
     {label: 'Education', value: 'Education'},
     {label: 'Others', value: 'Others'}
   ]);
@@ -83,13 +83,17 @@ export default function AddTransactionPage() {
       setErrMsg("Category cannot be empty")
       return;
     }
-    if (amount <= 0) {
+    if (amount == 0) {
       setErrMsg("Amount cannot be empty")
+      return;
+    }
+    else if (amount <= 0) {
+      setErrMsg("Amount must be more than 0")
       return;
     }
 
     //wanted to make amount into int but in firebase it is still saved as string
-    setAmount(parseInt(amount)); 
+    setAmount(parseFloat(amount)); 
     try {
       await addTransaction(user.uid, type, date, category, amount, note);
     } catch (error) {
@@ -246,7 +250,7 @@ export default function AddTransactionPage() {
               style={styles.input}
               autoCapitalize='none'
               keyboardType = 'numeric'
-              value={amount}
+              value={String(amount)}
               onChangeText={setAmount} />
           </View>
         </View>
