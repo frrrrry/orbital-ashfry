@@ -22,7 +22,7 @@ export async function getUser(uid) {
     const snapshot = await getDoc(docRef);
     console.log(docRef.data());
   } catch (error) {
-    console.log(error); 
+    console.log("getDoc error:", error); 
   }
 
   let allDetails = [];

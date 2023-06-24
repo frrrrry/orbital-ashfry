@@ -17,7 +17,7 @@ export default function App() {
     setInterval(() => setDateState(new Date()), 30000);
   }, []);
   
-  //to auto update the username and bio
+  // to auto update the username and bio
   const isFocused = useIsFocused();
 
   // get data from firebase
@@ -28,7 +28,7 @@ export default function App() {
         setUsername(result[0].username);
       } catch (error) {
         // if no such uid exists
-        console.log(error);
+        console.log("getUser error in index:", error);
       }
     };
     loadData();
