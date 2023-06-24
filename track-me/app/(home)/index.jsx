@@ -17,14 +17,19 @@ export default function App() {
     setInterval(() => setDateState(new Date()), 30000);
   }, []);
   
-  //to auto update the username and bio
+  // to auto update the username and bio
   const isFocused = useIsFocused();
 
   // get data from firebase
   useEffect(() => {
     const loadData = async () => {
-      const result = await getUser(user.uid);
-      setUsername(result[0].username);
+      try {
+        const result = await getUser(user.uid);
+        setUsername(result[0].username);
+      } catch (error) {
+        // if no such uid exists
+        console.log("getUser error in index:", error);
+      }
     };
     loadData();
   }, [isFocused]);

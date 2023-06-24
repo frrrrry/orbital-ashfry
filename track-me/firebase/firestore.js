@@ -1,4 +1,4 @@
-import { setDoc, addDoc, collection, doc, getDocs, orderBy, query, updateDoc, where, deleteDoc } from 'firebase/firestore'; 
+import { setDoc, addDoc, collection, doc, getDocs, orderBy, query, updateDoc, where, deleteDoc, getDoc } from 'firebase/firestore'; 
 import { db, storage } from './firebase';
 import { getDownloadURL } from './storage';
 
@@ -16,9 +16,10 @@ export function updateUserProfile(uid, username, bio, avatar ) {
 }
 
 export async function getUser(uid) {
+  //const docRef = doc(db, USERS_COLLECTION, uid);
   const userDetails = query(collection(db, USERS_COLLECTION), where("uid", "==", uid));
   const snapshot = await getDocs(userDetails);
-
+  
   let allDetails = [];
   for (const documentSnapshot of snapshot.docs) {
     const users = documentSnapshot.data();

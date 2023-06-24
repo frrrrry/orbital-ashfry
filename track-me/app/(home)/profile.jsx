@@ -10,6 +10,7 @@ import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { firebase } from "../../firebase/firebase";
 import nulluseravatar from "../../assets/nulluseravatar.png";
 import { set } from 'date-fns';
+import { connectStorageEmulator } from 'firebase/storage';
 
 export default function ProfilePage() {
   const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
@@ -35,9 +36,13 @@ export default function ProfilePage() {
   //get data from firebase
   useEffect(() => {
     const loadData = async () => {
-      const result = await getUser(user.uid);
-      setUsername(result[0].username);
-      setBio(result[0].bio);
+      try {
+        const result = await getUser(user.uid);
+        setUsername(result[0].username);
+        setBio(result[0].bio);
+      } catch (error) {
+        console.log("getUser error in profile:", error);
+      }
     };
     loadData();
 
