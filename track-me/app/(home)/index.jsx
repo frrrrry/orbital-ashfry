@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, SafeAreaView, FlatList } from 'react-native';
-import { Text, Button } from "react-native-paper";
+import { Text } from "react-native-paper";
 import React, { useState, useEffect } from 'react';
 import { useUserAuth } from "../../context/auth";
 import { useIsFocused } from '@react-navigation/native';
@@ -9,8 +9,8 @@ import { FlatListComponent } from '../components/FlatListComponent';
 
 export default function App() {
   const { user } = useUserAuth();
-  const [showUser, setShowUser] = useState([]);
   const [dateState, setDateState] = useState(new Date());
+  const [username, setUsername] = useState('')
 
   // update date every 30s 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function App() {
   useEffect(() => {
     const loadData = async () => {
       const result = await getUser(user.uid);
-      setShowUser(result);
+      setUsername(result[0].username);
     };
     loadData();
   }, [isFocused]);
@@ -38,12 +38,7 @@ export default function App() {
           </Text>
         </View>
         <View >
-          <Text style={styles.username}>
-            {showUser.map((user) => (
-              <Text style={styles.displayText} 
-              key={showUser.id}>{user.username}</Text>
-            ))}
-          </Text>
+          <Text style={styles.username}>{username}</Text>
         </View>
       </View>
       <View style={styles.dateContainer}>

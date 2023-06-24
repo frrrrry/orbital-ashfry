@@ -25,8 +25,9 @@ export default function ProfilePage() {
       console.log(error.message);
     }
   };
-  
-  const [showUser, setShowUser] = useState([]);
+
+  const [username, setUsername] = useState('')
+  const [bio, setBio] = useState('');
   
   //to auto update the username and bio
   const isFocused = useIsFocused();
@@ -35,7 +36,8 @@ export default function ProfilePage() {
   useEffect(() => {
     const loadData = async () => {
       const result = await getUser(user.uid);
-      setShowUser(result);
+      setUsername(result[0].username);
+      setBio(result[0].bio);
     };
     loadData();
 
@@ -49,7 +51,7 @@ export default function ProfilePage() {
       .catch((err) => console.log('getting downloadUrl of image error => ', err));
     } 
   }, [isFocused]);
-
+  
   /*
   // to delete image from firebase storage
   const deleteImage = () => {
@@ -80,27 +82,15 @@ export default function ProfilePage() {
         </View>
 
         <View style={ styles.display }>
-          <Text style={styles.subtitle}>
-            username: 
-          </Text>
-          <Text>
-          {showUser.map((user) => (
-            <Text style={styles.displayText} 
-            key={showUser.id}>{user.username}</Text>
-          ))}
-          </Text>
+          <Text style={styles.subtitle}>username: </Text>
+          <Text style={styles.displayText}>{username}</Text>
         </View>
         
         <View style={ styles.display }>
           <Text style={styles.subtitle}>
             bio: 
           </Text>
-          <Text>
-          {showUser.map((user) => (
-            <Text style={styles.displayText} 
-            key={showUser.id}>{user.bio}</Text>
-          ))}
-          </Text>
+          <Text style={styles.displayText}>{bio}</Text>
         </View>
 
       </View>

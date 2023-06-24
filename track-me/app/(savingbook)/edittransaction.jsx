@@ -103,6 +103,10 @@ export default function EditTransactionPage() {
       setErrMsg("Category cannot be empty")
       return;
     }
+    if (amount == 0) {
+      setErrMsg("Amount cannot be empty")
+      return;
+    }
     if (amount <= 0) {
       setErrMsg("Amount must be more than 0")
       return;
@@ -269,7 +273,7 @@ export default function EditTransactionPage() {
               style={styles.input}
               autoCapitalize='none'
               keyboardType = 'numeric'
-              value={amount}
+              value={String(amount)}
               onChangeText={setAmount} />
           </View>
         </View>
