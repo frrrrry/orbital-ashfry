@@ -88,7 +88,7 @@ export default function LoginPage() {
                 </View>
 
                 <Button onPress={handleLogin} 
-                mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer }>
+                mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer } testID="signinButton">
                     Sign in</Button>
                 {errMsg !== "" && <Text style={ {top:20} }>{errMsg}</Text>}
                 {loading && <ActivityIndicator color="black" style={ styles.submitContainer }/>}
