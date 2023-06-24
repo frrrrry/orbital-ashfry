@@ -88,7 +88,7 @@ export default function EditTransactionPage() {
   const [items, setItems] = useState([
     {label: 'Food', value: 'Food'},
     {label: 'Shopping', value: 'Shopping'},
-    {label: 'Transportation', value: 'Transportation'},
+    {label: 'Transport', value: 'Transport'},
     {label: 'Education', value: 'Education'},
     {label: 'Others', value: 'Others'}
   ]);

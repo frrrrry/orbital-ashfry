@@ -18,7 +18,7 @@ export default function FrontPage() {
         <Link href="/register">
             <Button mode="contained" buttonColor="#c5c5c5" style={{ width: 300 }}>
               Sign up</Button>
-          </Link>
+        </Link>
 
       </View>
     </View>

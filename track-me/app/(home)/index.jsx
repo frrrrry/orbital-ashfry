@@ -6,7 +6,6 @@ import { useUserAuth } from "../../context/auth";
 import { useIsFocused } from '@react-navigation/native';
 import { getUser } from '../../firebase/firestore';
 import { FlatListComponent } from '../components/FlatListComponent';
-import { auth } from '../../firebase/firebase'
 
 export default function App() {
   const { user } = useUserAuth();
