@@ -5,7 +5,8 @@ import { getDownloadURL } from './storage';
 // Name of collection in Firestore
 const USERS_COLLECTION = 'users';
 const TRANSACTION_COLLECTION = 'transactions'
- 
+const SUBWALLET_COLLECTION = 'subwallets'
+
 // Adds new user profile to Firestore with null values
 export function addUserProfile(uid) {
   setDoc(doc(db, USERS_COLLECTION, uid), { uid, username: "", bio: "", avatar: null });
@@ -68,4 +69,41 @@ export function updateTransaction(id, type, date, category, amount, note ) {
 // Deletes transactions with given id.
 export function deleteTransaction(id) {
   deleteDoc(doc(db, TRANSACTION_COLLECTION, id));
+}
+
+// adds new subwallet to firestore
+export function addWallet(uid, title, totalAmount, currAmount, note, startDate, endDate) {
+  addDoc(collection(db, SUBWALLET_COLLECTION), { uid, title, totalAmount, currAmount, note, startDate, endDate});
+}
+
+// get all subwallet details from uid
+export async function getWallet(uid) {
+  const walletQuery = query(collection(db, SUBWALLET_COLLECTION), where("uid", "==", uid), orderBy("date", "desc"));
+  const snapshot = await getDocs(walletQuery); 
+
+  let allWallets = [];
+  for (const documentSnapshot of snapshot.docs) {
+    const wallets = documentSnapshot.data();
+    allWallets.push({
+      ...wallets, 
+      title: wallets['title'], 
+      totalAmount: parseFloat(wallets['totalAmount']).toFixed(2), 
+      currAmount: parseFloat(wallets['currAmount']).toFixed(2),
+      note: wallets['note'],
+      startDate: wallets['startDate'].toDate(),
+      endDate: wallets['endDate'].toDate(),
+      id: documentSnapshot.id
+    });
+  }
+  return allWallets;
+}
+
+// update specifc subwallet with given uid
+export function updateWallet(uid, title, totalAmount, currAmount, note, startDate, endDate ) {
+  updateDoc(doc(db, SUBWALLET_COLLECTION, uid), { title, totalAmount, currAmount, note, startDate, endDate });
+}
+
+// deletes subwallet with given uid
+export function deleteWallet(uid) {
+  deleteDoc(doc(db, SUBWALLET_COLLECTION, uid));
 }

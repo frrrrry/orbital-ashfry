@@ -87,7 +87,7 @@ export default function SavingBookPage() {
       
       <View style={{ alignSelf: 'flex-end', position: "absolute", bottom: 0 } } >
         <Link href="../(savingbook)/addtransactionpage">
-          <Ionicons name="ios-add-circle" size={65} color={'black'}/>
+          <Ionicons name="ios-add-circle" size={65} color={'black'} />
         </Link>
       </View>
       
