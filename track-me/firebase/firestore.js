@@ -1,4 +1,5 @@
-import { setDoc, addDoc, collection, doc, getDocs, orderBy, query, updateDoc, where, deleteDoc, getDoc } from 'firebase/firestore'; 
+import { setDoc, addDoc, collection, doc, getDocs, orderBy, query, 
+  updateDoc, where, deleteDoc, getDoc } from 'firebase/firestore'; 
 import { db, storage } from './firebase';
 import { getDownloadURL } from './storage';
 
@@ -35,13 +36,15 @@ export async function getUser(uid) {
 }
 
 // Adds new transaction to Firestore
-export function addTransaction(uid, type, date, category, amount, note) {
-  addDoc(collection(db, TRANSACTION_COLLECTION), { uid, type, date, category, amount, note});
+export function addTransaction(uid, type, date, category, amount, note, month, year) {
+  addDoc(collection(db, TRANSACTION_COLLECTION), { uid, type, date, category, amount, note, month, year});
 }
 
-//get all transaction details based on uid
+//get all transaction details based on uid and month
 export async function getTransactions(uid) {
-  const transactionQuery = query(collection(db, TRANSACTION_COLLECTION), where("uid", "==", uid), orderBy("date", "desc"));
+  let transactionQuery = query(collection(db, TRANSACTION_COLLECTION), 
+  where("uid", "==", uid),
+  orderBy("date", "desc"));
   const snapshot = await getDocs(transactionQuery); 
 
   let allTransactions = [];
@@ -54,15 +57,17 @@ export async function getTransactions(uid) {
       category: transactions['category'],
       amount: transactions['amount'], 
       note: transactions['note'],
-      id: documentSnapshot.id
+      id: documentSnapshot.id, 
+      month: transactions['month'],
+      year: transactions['year']
     });
   }
   return allTransactions;
 }
 
 // update specific transaction with given id
-export function updateTransaction(id, type, date, category, amount, note ) {
-  updateDoc(doc(db, TRANSACTION_COLLECTION, id), { type, date, category, amount, note });
+export function updateTransaction(id, type, date, category, amount, note, month, year ) {
+  updateDoc(doc(db, TRANSACTION_COLLECTION, id), { type, date, category, amount, note, month, year });
 }
 
 // Deletes transactions with given id.
