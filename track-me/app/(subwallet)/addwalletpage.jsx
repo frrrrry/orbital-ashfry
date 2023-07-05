@@ -127,6 +127,7 @@ export default function AddWalletPage() {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.input}
+                  placeholder='title'
                   autoCapitalize='none'
                   value={title}
                   onChangeText={setTitle} />
@@ -242,6 +243,7 @@ export default function AddWalletPage() {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.input}
+                  placeholder='note'
                   autoCapitalize='none'
                   value={note}
                   onChangeText={setNote} />
@@ -297,7 +299,6 @@ export default function AddWalletPage() {
           </View>
         </View>
       );  
-
 };
 
 const styles = StyleSheet.create({
