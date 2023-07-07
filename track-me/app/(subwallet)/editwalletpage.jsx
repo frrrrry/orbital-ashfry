@@ -62,7 +62,7 @@ export default function EditWalletPage() {
 
   // for start date picker
   const [startDate, setStartDate] = useState(new Date());
-  const [startDateshow, setStartDateShow] = useState(false);
+  const [startDateShow, setStartDateShow] = useState(false);
 
   let Todaydate = new Date(Date.now());
   Todaydate = Todaydate.getDate() + '/' + (Todaydate.getMonth() + 1) 
@@ -82,9 +82,11 @@ export default function EditWalletPage() {
       console.log('start date', displayStartDate);
   };
 
+  const showStartCalender = () => {setStartDateShow(true); };
+
   // for end date picker
   const [endDate, setEndDate] = useState(new Date());
-  const [endDateshow, setEndDateShow] = useState(false);
+  const [endDateShow, setEndDateShow] = useState(false);
 
   let TodayEndDate = new Date(Date.now());
   TodayEndDate = TodayEndDate.getDate() + '/' + (TodayEndDate.getMonth() + 1) 
@@ -104,7 +106,7 @@ export default function EditWalletPage() {
       console.log('end date', displayEndDate);
   };
 
-  const showCalender = () => {setdateShow(true); };
+  const showEndCalender = () => {setEndDateShow(true); };
 
   const handleSave = async () => {
       setErrMsg('');
@@ -147,14 +149,14 @@ export default function EditWalletPage() {
           </Link>
         </View>
         
-        <View style={{ flex: 0.8, top: -30 }}>
+        <View style={{ flex: 0.8, top: -60 }}>
           <Text style={styles.pageTitle}>Add Wallet</Text>
         </View>
   
         <View style={{ flex: 3 }}>
   
           {/* title */}
-          <View style={{ flexDirection:"row", top: 0  }}>
+          <View style={{ flexDirection:"row", top: -15  }}>
             <View style={styles.displayContainer}>
               <Text style={styles.body}>Title</Text>
             </View>
@@ -174,20 +176,19 @@ export default function EditWalletPage() {
           {/* Start Date */}
           {/* Android date picker */}
           { platform && (
-          <View style={{ flexDirection:"row", top: 15 }}>
-            <View style={styles.displayContainerAlt}>
-              <Text style={styles.body}>Start</Text>
-              <Text style={styles.body}>Date</Text>
+          <View style={{ flexDirection:"row", top: 0 }}>
+            <View style={styles.displayContainer}>
+              <Text style={styles.body}>Start Date</Text>
             </View>
             
             <View style={styles.dateContainer}>
-              {dateshow === false && (<TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
-                onPress={showCalender}>
+              {startDateShow === false && (<TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
+                onPress={showStartCalender}>
                   <Text style={{textAlign: 'center', fontSize: 16}}>{displayStartDate}</Text>
                 </TouchableOpacity>)
               }
   
-              {dateshow && (
+              {startDateShow && (
                 <DateTimePicker 
                 testID="dateTimePicker"
                 value={startDate}
@@ -203,7 +204,7 @@ export default function EditWalletPage() {
           
           {/* ios date picker - removed the box that is around the date picker */}
           { platform === false && (
-          <View style={{ flexDirection:"row", top: 15 }}>
+          <View style={{ flexDirection:"row", top: 0 }}>
             <View style={styles.displayContainer3}>
               <Text style={styles.body}>Start Date</Text>
               
@@ -225,19 +226,19 @@ export default function EditWalletPage() {
           {/* End Date */}
           {/* Android date picker */}
           { platform && (
-          <View style={{ flexDirection:"row", top: 30 }}>
+          <View style={{ flexDirection:"row", top: 15 }}>
             <View style={styles.displayContainer}>
               <Text style={styles.body}>End Date</Text>
             </View>
             
             <View style={styles.dateContainer}>
-              {dateshow === false && (<TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
-                onPress={showCalender}>
+              {endDateShow === false && (<TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
+                onPress={showEndCalender}>
                   <Text style={{textAlign: 'center', fontSize: 16}}>{displayEndDate}</Text>
                 </TouchableOpacity>)
               }
   
-              {dateshow && (
+              {endDateShow && (
                 <DateTimePicker 
                 testID="dateTimePicker"
                 value={endDate}
@@ -253,7 +254,7 @@ export default function EditWalletPage() {
           
           {/* ios date picker - removed the box that is around the date picker */}
           { platform === false && (
-          <View style={{ flexDirection:"row", top: 30 }}>
+          <View style={{ flexDirection:"row", top: 15 }}>
             <View style={styles.displayContainer}>
               <Text style={styles.body}>End Date</Text>
             </View>
@@ -272,7 +273,7 @@ export default function EditWalletPage() {
           )}
 
           {/* note input */}
-          <View style={{ flexDirection:"row", top: 45  }}>
+          <View style={{ flexDirection:"row", top: 30  }}>
             <View style={styles.displayContainer}>
               <Text style={styles.body}>Note</Text>
             </View>
@@ -290,7 +291,7 @@ export default function EditWalletPage() {
           </View>
   
           {/* total amount input */}
-          <View style={{ flexDirection:"row", top: 60 }}>
+          <View style={{ flexDirection:"row", top: 45 }}>
             <View style={styles.displayContainer2}>
               <Text style={styles.body}>Total</Text>
               <Text style={styles.body}>Amount</Text>
@@ -310,7 +311,7 @@ export default function EditWalletPage() {
           </View>
           
           {/* current amount input */}
-          <View style={{ flexDirection:"row", top: 75 }}>
+          <View style={{ flexDirection:"row", top: 60 }}>
             <View style={styles.displayContainer2}>
               <Text style={styles.body}>Current</Text>
               <Text style={styles.body}>Amount</Text>
@@ -331,7 +332,7 @@ export default function EditWalletPage() {
            
   
           {/* save button */}
-          <View style={{ flexDirection:"row", top: 110 }}>
+          <View style={{ flexDirection:"row", top: 80 }}>
   
   
             <TouchableOpacity activeOpacity={0.8} style={styles.saveContainer} 
@@ -339,7 +340,7 @@ export default function EditWalletPage() {
                 <Text style={ styles.setWhite }>Save</Text>
             </TouchableOpacity>
           </View>
-          {errMsg !== "" && <Text style={ {top: 60, left: 10} }>{errMsg}</Text>}
+          {errMsg !== "" && <Text style={ {top: 30, left: 10} }>{errMsg}</Text>}
         
         </View>
       </View>

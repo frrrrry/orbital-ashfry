@@ -99,11 +99,11 @@ export async function getWallet(uid) {
 }
 
 // update specifc subwallet with given uid
-export function updateWallet(uid, title, totalAmount, currAmount, note, startDate, endDate ) {
-  updateDoc(doc(db, SUBWALLET_COLLECTION, uid), { title, totalAmount, currAmount, note, startDate, endDate });
+export function updateWallet(id, title, totalAmount, currAmount, note, startDate, endDate ) {
+  updateDoc(doc(db, SUBWALLET_COLLECTION, id), { title, totalAmount, currAmount, note, startDate, endDate });
 }
 
 // deletes subwallet with given uid
-export function deleteWallet(uid) {
-  deleteDoc(doc(db, SUBWALLET_COLLECTION, uid));
+export function deleteWallet(id) {
+  deleteDoc(doc(db, SUBWALLET_COLLECTION, id));
 }
