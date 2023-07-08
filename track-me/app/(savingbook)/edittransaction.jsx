@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, Platform } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Platform } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useUserAuth } from "../../context/auth";
 import { useNavigation } from '@react-navigation/native';
@@ -15,20 +15,13 @@ export default function EditTransactionPage() {
   const isFocused = useIsFocused();
 
   const [transactionid, setTransactionid] = useState('');
-
-  useEffect(() => {
-    const getValueFunction = () => {
-        // Function to get the value from AsyncStorage
-        AsyncStorage.getItem('transactionid').then(
-        (value) =>
-            setTransactionid(value),
-        );
-    
-    };
-    getValueFunction();
-  }, [isFocused]);
-
-  console.log("transactionid", transactionid);
+  const [type, setType] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [category, setCategory] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [note, setNote] = useState('');
+  const [month, setMonth] = useState(0);
+  const [year, setYear] = useState(0);
 
   const navigation = useNavigation();
   const router = useRouter();
@@ -38,8 +31,6 @@ export default function EditTransactionPage() {
   const [errMsg, setErrMsg] = useState('');
 
   // for income and expenses
-  const [type, setType] = useState('');
-
   // false will mean no border around the income/expense word
   const [incomeshow, setIncomeshow] = useState(false);
   const [expenseshow, setExpenseshow] = useState(false);
@@ -54,8 +45,49 @@ export default function EditTransactionPage() {
     setIncomeshow(false);
   };
 
+  useEffect(() => {
+    const getValueFunction = async () => {
+      // Function to get the value from AsyncStorage
+      AsyncStorage.getItem('transactionid').then(
+        (value) => setTransactionid(value));
+
+      AsyncStorage.getItem('transactionType').then(
+        (value) => {
+          setType(value);
+          if (value == "Income") {
+            setIncomeshow(true); 
+            setExpenseshow(false); 
+          } else if (value == "Expense") {
+            setExpenseshow(true); 
+            setIncomeshow(false);
+          } 
+        });
+      
+      AsyncStorage.getItem('transactionCategory').then(
+        (value) => setCategory(value));
+
+      JSON.parse(JSON.stringify(AsyncStorage.getItem('transactionAmount').then(
+        (value) => setAmount(value))));
+      
+      AsyncStorage.getItem('transactionNote').then(
+        (value) => setNote(value));
+
+      JSON.parse(JSON.stringify(AsyncStorage.getItem('transactionMonth').then(
+        (value) => setMonth(value))));
+
+      JSON.parse(JSON.stringify(AsyncStorage.getItem('transactionYear').then(
+        (value) => setYear(value))));
+  
+      JSON.parse(JSON.stringify(AsyncStorage.getItem('transactionDate').then(
+        (value) => setDate(new Date(value.substring(1, 24)))
+        )));
+
+    };
+    getValueFunction();
+
+  }, [isFocused]);
+
   // for date picker
-  const [date, setDate] = useState(new Date());
   const [dateshow, setdateShow] = useState(false);
 
   let Todaydate = new Date(Date.now());
@@ -74,17 +106,15 @@ export default function EditTransactionPage() {
                 + '/' + tempDate.getFullYear();
     setdisplayDate(fDate);
     console.log('text', displayDate);
+
+    setMonth(tempDate.getMonth() + 1);
+    setYear(tempDate.getFullYear());
   };
 
   const showCalender = () => {setdateShow(true); };
 
-  // text input - amount and note
-  const [amount, setAmount] = useState(0);
-  const [note, setNote] = useState('');
-
   // category dropdown box
   const [open, setOpen] = useState(false);
-  const [category, setCategory] = useState('');
   const [items, setItems] = useState([
     {label: 'Food', value: 'Food'},
     {label: 'Shopping', value: 'Shopping'},
@@ -105,17 +135,41 @@ export default function EditTransactionPage() {
     }
     if (amount == 0) {
       setErrMsg("Amount cannot be empty")
+      console.log("type amount", typeof(amount));
+      console.log("amount", amount);
+      console.log("substring amount", amount.substring(0,1));
+      if (amount.substring(0,1) == ".") {
+        const string_amount = '0' + amount;
+        setAmount(string_amount);
+      }
+      console.log("string amount", amount);
+      console.log("type amount", typeof(parseFloat(amount)));
+      console.log("amount", amount);
       return;
-    }
-    if (amount <= 0) {
+    } else if (amount <= 0) {
       setErrMsg("Amount must be more than 0")
       return;
     }
 
-    //wanted to make amount into int but in firebase it is still saved as string
-    setAmount(parseInt(amount)); 
     try {
-      await updateTransaction(transactionid, type, date, category, amount, note )
+      if (month.length == 3) {
+        const int_month = month.substring(1,2);
+        setMonth(int_month);
+      } else if (month.length == 4) {
+        const int_month = month.substring(1,3);
+        setMonth(int_month);
+      }
+      console.log("type 2 month", typeof(month));
+
+      if (amount.substring(0,1) == ".") {
+        const string_amount = "." + amount;
+        const float_amount = parseFloat(string_amount);
+        const fixed_amount = float_amount.toFixed(2);
+        setAmount(fixed_amount);
+      }
+
+      await updateTransaction(transactionid, type, date, category, parseFloat(amount), note, 
+        parseInt(month), parseInt(year) )
     } catch (error) {
       setErrMsg(error.message)
       console.log("error message: ", error.message);
@@ -124,8 +178,6 @@ export default function EditTransactionPage() {
     }
     router.push("../(home)/savingbook");
   }
-
-  //console.log(typeof amount);
 
   const handleDelete = async () => {
     setErrMsg('');
@@ -228,7 +280,7 @@ export default function EditTransactionPage() {
             <Text style={styles.body}>Date</Text>
           </View>
           
-          <View style={{ left: -10 }}>
+          <View>
             <DateTimePicker
             testID="dateTimePicker"
             value={date}
@@ -274,7 +326,14 @@ export default function EditTransactionPage() {
               autoCapitalize='none'
               keyboardType = 'numeric'
               value={String(amount)}
-              onChangeText={setAmount} />
+              onChangeText={(text) => {
+                const validated = text.match(/^(\d*\.{0,1}\d{0,2}$)/)
+                if (validated) {
+                  setAmount(text)
+                }
+            }} />
+
+
           </View>
         </View>
 

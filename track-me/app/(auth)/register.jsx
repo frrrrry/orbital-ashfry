@@ -68,7 +68,15 @@ export default function RegisterPage() {
                         autoCapitalize='none'
                         textContentType='emailAddress'
                         value={email}
-                        onChangeText={setEmail} />
+                        onChangeText={(text) => {
+                          if (text.includes(' ')) {
+                            setEmail(text.trim()); 
+                           } else {
+                            setEmail(text);
+                           }
+                          }
+                         }     
+                        />
                     <Icon name="mail" size={20}/>
                 </View>
                 
@@ -80,7 +88,15 @@ export default function RegisterPage() {
                         autoCapitalize='none'
                         textContentType='password'
                         value={password}
-                        onChangeText={setPassword} />
+                        onChangeText={(text) => {
+                          if (text.includes(' ')) {
+                            setPassword(text.trim()); 
+                           } else {
+                            setPassword(text);
+                           }
+                          }
+                         }                         
+                      />
                     <Icon name="lock" size={20} color="#000"/>
                 </View>
 

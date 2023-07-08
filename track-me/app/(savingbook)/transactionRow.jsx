@@ -17,8 +17,16 @@ export default function TransactionRow(props) {
     amountColor = '#EF2323'
   }
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     AsyncStorage.setItem('transactionid', transaction.id);
+    AsyncStorage.setItem('transactionType', transaction.type);
+    AsyncStorage.setItem('transactionCategory', transaction.category);
+    await AsyncStorage.setItem('transactionAmount', JSON.stringify(transaction.amount));
+    AsyncStorage.setItem('transactionNote', transaction.note);
+    await AsyncStorage.setItem('transactionMonth', JSON.stringify(transaction.month));
+    await AsyncStorage.setItem('transactionYear', JSON.stringify(transaction.year));
+    await AsyncStorage.setItem('transactionDate', JSON.stringify(transaction.date));
+
     router.push("/edittransaction");
   }
 
@@ -43,7 +51,7 @@ export default function TransactionRow(props) {
               </View>
 
               <View style={{ width: 105 }}>
-                <Text style={{ textAlign: "right", color: amountColor }}>${transaction.amount}</Text>
+                <Text style={{ textAlign: "right", color: amountColor }}>${parseFloat(transaction.amount).toFixed(2)}</Text>
               </View>
             </View>
         </TouchableOpacity>

@@ -37,6 +37,8 @@ export default function AddTransactionPage() {
   // for date picker
   const [date, setDate] = useState(new Date());
   const [dateshow, setdateShow] = useState(false);
+  const [month, setMonth] = useState(0);
+  const [year, setYear] = useState(0);
 
   let Todaydate = new Date(Date.now());
   Todaydate = Todaydate.getDate() + '/' + (Todaydate.getMonth() + 1) 
@@ -54,7 +56,15 @@ export default function AddTransactionPage() {
                 + '/' + tempDate.getFullYear();
     setdisplayDate(fDate);
     console.log('text', displayDate);
+
+    setMonth(tempDate.getMonth() + 1);
+    setYear(tempDate.getFullYear());
   };
+
+  const test = date.getMonth() + 1;
+  console.log("date", date);
+  //console.log("month", typeof(date.getMonth() + 1));
+  console.log("number", test);
 
   const showCalender = () => {setdateShow(true); };
 
@@ -77,6 +87,9 @@ export default function AddTransactionPage() {
     setErrMsg('');
     if (type == '') {
       setErrMsg("Please select Income or Expense")
+      console.log("type amount", typeof(amount));
+      console.log("type year", typeof(year));
+      console.log("type month", typeof(month));
       return;
     }
     if (category == '') {
@@ -94,8 +107,11 @@ export default function AddTransactionPage() {
 
     //wanted to make amount into int but in firebase it is still saved as string
     setAmount(parseFloat(amount)); 
+    console.log("type amount", typeof(amount));
+    console.log("type year", typeof(year));
+    console.log("type month", typeof(month));
     try {
-      await addTransaction(user.uid, type, date, category, amount, note);
+      await addTransaction(user.uid, type, date, category, parseFloat(amount).toFixed(2), note, month, year);
     } catch (error) {
       setErrMsg(error.message)
       console.log("error message: ", error.message);
@@ -205,7 +221,7 @@ export default function AddTransactionPage() {
             <Text style={styles.body}>Date</Text>
           </View>
           
-          <View style={{ left: -10 }}>
+          <View style={{ left: 0 }}>
             <DateTimePicker
             testID="dateTimePicker"
             value={date}
@@ -251,7 +267,12 @@ export default function AddTransactionPage() {
               autoCapitalize='none'
               keyboardType = 'numeric'
               value={String(amount)}
-              onChangeText={setAmount} />
+              onChangeText={(text) => {
+                const validated = text.match(/^(\d*\.{0,1}\d{0,2}$)/)
+                if (validated) {
+                  setAmount(text)
+                }
+              }} />
           </View>
         </View>
 

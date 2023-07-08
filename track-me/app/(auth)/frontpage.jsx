@@ -1,24 +1,27 @@
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from 'react-native-paper';
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 
 export default function FrontPage() {
+  const router = useRouter();
+  const handleSignup = async () => {
+    router.push("/register");
+  }
+
+  const handleSignin = async () => {
+    router.push("/login");
+  }
 
   return (
     <View style={styles.container}>
-      
       <View style={styles.main}>
         <Text style={styles.title}>Track Me</Text>
-          <Link href="/login">
-            <Button mode="contained" buttonColor="#c5c5c5" style={{ width: 300 }}>
-              Sign in</Button>
-          </Link>
+        <Button onPress={handleSignin} mode="contained" buttonColor="#c5c5c5" style={{ width: 300 }}>
+          Sign in</Button>
         
-      <Text style={styles.subtitle}></Text>
-        <Link href="/register">
-            <Button mode="contained" buttonColor="#c5c5c5" style={{ width: 300 }}>
-              Sign up</Button>
-        </Link>
+        <Text style={styles.subtitle}></Text>
+        <Button onPress={handleSignup}mode="contained" buttonColor="#c5c5c5" style={{ width: 300 }}>
+          Sign up</Button>
 
       </View>
     </View>
