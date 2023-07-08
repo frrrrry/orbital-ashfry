@@ -42,6 +42,8 @@ export default function SavingBookPage() {
 
   }, [isFocused]);
 
+  // console.log(transactions); 
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />

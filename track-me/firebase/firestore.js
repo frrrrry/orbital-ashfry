@@ -78,7 +78,7 @@ export function addWallet(uid, title, totalAmount, currAmount, note, startDate, 
 
 // get all subwallet details from uid
 export async function getWallet(uid) {
-  const walletQuery = query(collection(db, SUBWALLET_COLLECTION), where("uid", "==", uid), orderBy("date", "desc"));
+  const walletQuery = query(collection(db, SUBWALLET_COLLECTION), where("uid", "==", uid), orderBy("startDate", "desc"));
   const snapshot = await getDocs(walletQuery); 
 
   let allWallets = [];
@@ -87,14 +87,15 @@ export async function getWallet(uid) {
     allWallets.push({
       ...wallets, 
       title: wallets['title'], 
-      totalAmount: parseFloat(wallets['totalAmount']).toFixed(2), 
-      currAmount: parseFloat(wallets['currAmount']).toFixed(2),
+      totalAmount: wallets['totalAmount'], 
+      currAmount: wallets['currAmount'],
       note: wallets['note'],
       startDate: wallets['startDate'].toDate(),
       endDate: wallets['endDate'].toDate(),
       id: documentSnapshot.id
     });
   }
+  // console.log('allwallets', allWallets); 
   return allWallets;
 }
 

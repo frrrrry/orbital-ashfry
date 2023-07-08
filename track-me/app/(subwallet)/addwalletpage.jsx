@@ -29,14 +29,14 @@ export default function AddWalletPage() {
     const [startDate, setStartDate] = useState(new Date());
     const [startDateShow, setStartDateShow] = useState(false);
 
-    let Todaydate = new Date(Date.now());
-    Todaydate = Todaydate.getDate() + '/' + (Todaydate.getMonth() + 1) 
-                    + '/' + Todaydate.getFullYear();
+    let TodayStartDate = new Date(Date.now());
+    TodayStartDate = TodayStartDate.getDate() + '/' + (TodayStartDate.getMonth() + 1) 
+                    + '/' + TodayStartDate.getFullYear();
 
-    const [displayStartDate, setdisplayStartDate] = useState(Todaydate);
+    const [displayStartDate, setdisplayStartDate] = useState(TodayStartDate);
 
-    const onChange = (event, selectedStartDate) => {
-        const currentStartDate = selectedStartDate || date;
+    const onStartChange = (event, selectedStartDate) => {
+        const currentStartDate = selectedStartDate || startDate;
         setStartDateShow(false);
         setStartDate(currentStartDate);
 
@@ -57,7 +57,7 @@ export default function AddWalletPage() {
     TodayEndDate = TodayEndDate.getDate() + '/' + (TodayEndDate.getMonth() + 1) 
                     + '/' + TodayEndDate.getFullYear();
 
-    const [displayEndDate, setdisplayEndDate] = useState(Todaydate);
+    const [displayEndDate, setdisplayEndDate] = useState(TodayEndDate);
 
     const onEndChange = (event, selectedEndDate) => {
         const currentEndDate = selectedEndDate || endDate;
@@ -86,10 +86,7 @@ export default function AddWalletPage() {
             setErrMsg("Total Amount must be more than 0")
             return;
         }
-        if (currAmount == 0) {
-            setErrMsg("Current Amount cannot be empty")
-            return;
-        } else if (currAmount <= 0)  {
+        if (currAmount < 0)  {
             setErrMsg("Current Amount must be more than 0")
             return;
         }
@@ -158,7 +155,7 @@ export default function AddWalletPage() {
                   mode={'date'}
                   is24Hour={true}
                   display="default"
-                  onChange={onChange}
+                  onChange={onStartChange}
                   />
                 )}
               </View>
@@ -180,7 +177,7 @@ export default function AddWalletPage() {
                 mode={'date'}
                 is24Hour={true}
                 display="default"
-                onChange={onChange}
+                onChange={onStartChange}
                 />
               </View>
             </View>
@@ -208,7 +205,7 @@ export default function AddWalletPage() {
                   mode={'date'}
                   is24Hour={true}
                   display="default"
-                  onChange={onChange}
+                  onChange={onEndChange}
                   />
                 )}
               </View>
@@ -229,7 +226,7 @@ export default function AddWalletPage() {
                 mode={'date'}
                 is24Hour={true}
                 display="default"
-                onChange={onChange}
+                onChange={onEndChange}
                 />
               </View>
             </View>

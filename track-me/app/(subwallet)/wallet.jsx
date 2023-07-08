@@ -33,27 +33,38 @@ const DATA = [
   {
     id: 4, 
     title: 'japan trip'
+  },
+  {
+    id: 5, 
+    title: 'test'
   }
 ]
 
-const Wallet = () => {
-  const { user } = useUserAuth();
-  // const wallets = getWallet(user.uid); 
+// console.log("test data", DATA);
+
+const Wallet = (props) => {
+  const wallets = props.wallets; 
+  console.log('walletpage', wallets);
+  const isFocused = useIsFocused();
+  
+  const [listData, setListData] = useState([]); 
+
+  useEffect(() => {
+    const result = wallets.map((walletItem) => ({
+      key: walletItem.id,
+      title: walletItem.title,
+    }))
+    setListData(result); 
+  }, [isFocused]);
+
   /*
-  const [data, setData] = useState(
+  const [listData, setListData] = useState(
     wallets.map((walletItem) => ({
       key: walletItem.id,
       title: walletItem.title,
-    })),
+    }))
   );
   */
-
-  const [listData, setListData] = useState(
-    DATA.map((dataItem) => ({
-      key: dataItem.id,
-      title: dataItem.title
-    })) 
-  )
 
   const router = useRouter();
 
@@ -70,7 +81,7 @@ const Wallet = () => {
 
   const deleteRow = (rowMap, rowKey) => {
     closeRow(rowMap, rowKey); 
-    // deleteWallet(rowMap[rowKey]);
+    deleteWallet(rowKey);
     const newData = [...listData]; 
     const prevIndex = listData.findIndex(item => item.key === rowKey);
     newData.splice(prevIndex, 1); 
@@ -110,12 +121,12 @@ const Wallet = () => {
         <TouchableOpacity 
           style={[styles.backBtn, styles.backBtnLeft]}
           onPress={onClose}> 
-          <AntDesign name="edit" size={22} color="#c5c5c5" style={styles.icon} /> 
+          <AntDesign name="edit" size={22} color="#fff" style={styles.icon} /> 
         </TouchableOpacity>
         <TouchableOpacity 
           style={[styles.backBtn, styles.backBtnRight]}
           onPress={onDelete}> 
-          <AntDesign name="delete" size={22} color="#c5c5c5" style={styles.icon} />
+          <AntDesign name="delete" size={22} color="#fff" style={styles.icon} />
         </TouchableOpacity>
       </View>
     )
@@ -140,7 +151,7 @@ const Wallet = () => {
         renderHiddenItem={renderHiddenItem}
         leftOpenValue={75}
         rightOpenValue={-150}
-        
+        disableRightSwipe
         />
     </View>
   )
@@ -157,31 +168,28 @@ const styles = StyleSheet.create({
   rowFront: {
     backgroundColor: '#fff',
     borderRadius: 15, 
-    height: 110,
-    // width: 300,
+    height: 122,
+    width: 300,
     margin: 5,
     marginBottom: 15,
-    shadowColor: '#999',
-    shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
+    top: -5, 
+    left: -5
   },
   rowFrontVisible: {
     backgroundColor: '#e1e1e1',
     borderRadius: 15,
-    height: 110,
-    width: 300,
+    height: 122,
+    width: 310,
     padding: 10,
-    marginBottom: 15,
+    marginBottom: 8,
   },
   rowBack: {
     alignItems: 'center',
-    backgroundColor: '#DDD',
+    backgroundColor: '#fff',
     flex: 1,
     flexDirection: 'row',
     borderRadius: 15,
-    height: 10,
+    marginBottom: 8,
   },
   backBtn: {
     alignItems: 'flex-end',
@@ -190,23 +198,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: 80,
-    height: 110,
+    height: 122,
     paddingRight: 17,
   },
   backBtnLeft: {
     backgroundColor: '#1f65ff',
     right: 80,
-    height: 110,
+    height: 122,
   },
   backBtnRight: {
     backgroundColor: 'red',
     right: 0,
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
-    height: 110,
+    height: 122,
   },
   title: {
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,
     color: '#666',
