@@ -73,22 +73,34 @@ const Wallet = (props) => {
 
   const router = useRouter();
 
-  const editRow = async (rowMap, rowKey) => {
-    AsyncStorage.setItem('walletId', rowKey); 
-    AsyncStorage.setItem('walletTitle', rowMap[rowKey].title); 
-    await AsyncStorage.setItem('walletStartDate', JSON.stringify(rowMap[rowKey].startDate));
-    await AsyncStorage.setItem('walletEndDate', JSON.stringify(rowMap[rowKey].endDate));
-    AsyncStorage.setItem('walletNote', rowMap[rowKey].note);
-    await AsyncStorage.setItem('walletTotalAmount', JSON.stringify(rowMap[rowKey].totalAmount));
-    await AsyncStorage.setItem('walletCurrAmount', JSON.stringify(rowMap[rowKey].currAmount));
-
-    router.push("/editwalletpage");
-  }
-
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
       rowMap[rowKey].closeRow();
     }
+  }
+
+  const findArrayItemById = (array, id) => {
+    return array.find((item) => {
+      return item.id == id; 
+    })
+  }
+
+  const editRow = async (rowMap, rowKey) => {
+    closeRow(rowMap, rowKey); 
+    console.log("walletid", rowKey);
+    // console.log("walletItem", rowMap[rowKey]); 
+    const walletItem = findArrayItemById(wallets, rowKey); 
+    console.log("walletItem2", walletItem); 
+   
+    AsyncStorage.setItem('walletId', rowKey); 
+    AsyncStorage.setItem('walletTitle', walletItem.title); 
+    await AsyncStorage.setItem('walletStartDate', JSON.stringify(walletItem.startDate));
+    await AsyncStorage.setItem('walletEndDate', JSON.stringify(walletItem.endDate));
+    AsyncStorage.setItem('walletNote', walletItem.note);
+    await AsyncStorage.setItem('walletTotalAmount', walletItem.totalAmount);
+    await AsyncStorage.setItem('walletCurrAmount', walletItem.currAmount);
+
+    router.push("/editwalletpage");
   }
 
   const deleteRow = (rowMap, rowKey) => {
@@ -109,8 +121,9 @@ const Wallet = (props) => {
           style={styles.rowFrontVisible}
           onPress={() => console.log("wallet element touched")}
           underlayColor={'#c5c5c5'}>
-          <View>
+          <View style={{flexDirection: 'column'}}>
             <Text style={styles.title}>{data.item.title}</Text>
+            <Text style={styles.totalAmount}>${data.item.totalAmount}</Text>
           </View>
         </TouchableHighlight>
       </Animated.View>
@@ -231,6 +244,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: '#666',
     left: 5,
+  },
+  totalAmount: {
+    fontSize: 20, 
+    fontWeight: 'bold',
+    color: '#666',
+    left: 5, 
   },
   icon: {
     height: 25,

@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useRouter } from "expo-router";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import { updateWallet } from '../../firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Link } from "expo-router";
@@ -30,6 +31,9 @@ export default function AddWalletPage() {
         (value) => setWalletId(value)
       );
 
+      AsyncStorage.getItem('walletTitle').then(
+        (value) => setTitle(value));
+
       JSON.parse(JSON.stringify(AsyncStorage.getItem('walletTotalAmount').then(
         (value) => setTotalAmount(value))));
 
@@ -39,15 +43,17 @@ export default function AddWalletPage() {
       AsyncStorage.getItem('walletNote').then(
         (value) => setNote(value));
       
-      JSON.parse(JSON.stringify(AsyncStorage.getItem('walletStartDate').then(
+      AsyncStorage.getItem('walletStartDate').then(
         (value) => setStartDate(new Date(value.substring(1, 24)))
-      )));
+      );
 
-      JSON.parse(JSON.stringify(AsyncStorage.getItem('walletEndDate').then(
+      AsyncStorage.getItem('walletEndDate').then(
         (value) => setEndDate(new Date(value.substring(1, 24)))
-      )));
+      );
     }
-  })
+    getValueFunction();
+
+  }, [isFocused]);
 
   // for start date picker
   const [startDateShow, setStartDateShow] = useState(false);
@@ -115,7 +121,7 @@ export default function AddWalletPage() {
     
     // add to firestore collection 
     try {
-      await updateWallet(user.uid, title, parseFloat(totalAmount).toFixed(2), parseFloat(currAmount).toFixed(2), note, startDate, endDate);
+      await updateWallet(walletId, title, parseFloat(totalAmount).toFixed(2), parseFloat(currAmount).toFixed(2), note, startDate, endDate);
     } catch (error) {
       setErrMsg(error.message)
       console.log("error message: ", error.message);
