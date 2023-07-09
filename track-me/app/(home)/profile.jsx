@@ -16,7 +16,7 @@ export default function ProfilePage() {
   const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
   const { logOut, user } = useUserAuth();
   const [ avatarUrl, setAvatarUrl ] = useState(nullAvatar);
-  const [ refreshing, setRefreshing ] = useState(false);
+  const [ refresh, setRefresh ] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -27,11 +27,20 @@ export default function ProfilePage() {
     }
   };
 
+  const handleRefresh = async () => {
+    try {
+      setRefresh(true);
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const [username, setUsername] = useState('')
   const [bio, setBio] = useState('');
   
   //to auto update the username and bio
-  const isFocused = useIsFocused();
+  //const isFocused = useIsFocused();
 
   //get data from firebase
   useEffect(() => {
@@ -44,7 +53,6 @@ export default function ProfilePage() {
         console.log("getUser error in profile:", error);
       }
     };
-    loadData();
 
     let imageRef = firebase.storage().ref('/' + user.uid);
     if (imageRef) {
@@ -55,7 +63,10 @@ export default function ProfilePage() {
       })
       .catch((err) => console.log('getting downloadUrl of image error => ', err));
     } 
-  }, [isFocused]);
+
+    loadData();
+    setRefresh(false);
+  }, [refresh]);
   
   /*
   // to delete image from firebase storage
@@ -101,16 +112,20 @@ export default function ProfilePage() {
       </View>
 
       <View style={{ flex: 0.7 }}>
-        <StatusBar style="auto" />
+      
+        <TouchableOpacity onPress={handleRefresh}>
+          <Text style={styles.refreshContainer}>Refresh</Text>
+        </TouchableOpacity>
 
-        <Button onPress={handleLogout} 
-                  mode="contained" buttonColor="#c5c5c5" style={ styles.signoutButton }>
-                      Sign out</Button>
         <View style={styles.profileContainer}>
           <Link href="../(profile)/profilecreationpage">
             <Text style={styles.editprofileContainer}>Edit Profile</Text>
           </Link>
         </View>
+
+        <Button onPress={handleLogout} 
+                  mode="contained" buttonColor="#c5c5c5" style={ styles.signoutButton }>
+                      Sign out</Button>
         
       </View>
       
@@ -170,21 +185,30 @@ const styles = StyleSheet.create({
     padding: 10,
     left: 20,
     top: 20,
-  
   },
   signoutButton: {
     justifyContent: 'center',
     alignContent: 'center',
     width: 140,
     height: 45,
+    top: 10,
   },
   profileContainer: {
     justifyContent: 'center',
     alignItems: 'center', 
-    top: 15
+    top: 0,
+    backgroundColor: "#c5c5c5",
+    height: 45,
+    borderRadius: 20, 
    },
   editprofileContainer: {
+    color:'#fff',
+    textAlign: 'center',
+    fontWeight: '500'
+   },
+  refreshContainer: {
     color:'#8A8A8A',
     textAlign: 'center',
+    top: -15
    }
 });

@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { getWallet, deleteWallet } from '../../firebase/firestore';
 import { AntDesign, } from '@expo/vector-icons';
+import ProgressBar from 'react-native-progress/Bar';
 
 const DATA = [
   {
@@ -44,7 +45,7 @@ const DATA = [
 
 const Wallet = (props) => {
   const wallets = props.wallets; 
-  console.log('walletpage', wallets);
+  // console.log('walletpage', wallets);
   const isFocused = useIsFocused();
   
   const [listData, setListData] = useState([]); 
@@ -87,10 +88,10 @@ const Wallet = (props) => {
 
   const editRow = async (rowMap, rowKey) => {
     closeRow(rowMap, rowKey); 
-    console.log("walletid", rowKey);
+    // console.log("walletid", rowKey);
     // console.log("walletItem", rowMap[rowKey]); 
     const walletItem = findArrayItemById(wallets, rowKey); 
-    console.log("walletItem2", walletItem); 
+    // console.log("walletItem2", walletItem); 
    
     AsyncStorage.setItem('walletId', rowKey); 
     AsyncStorage.setItem('walletTitle', walletItem.title); 
@@ -112,6 +113,29 @@ const Wallet = (props) => {
     setListData(newData);
   }
 
+  const [progress, setProgress] = useState(0); 
+
+  const ProgressBarComponent = props => {
+    const {data} = props;
+
+    const totalAmt = data.item.totalAmount; 
+    const currAmt = data.item.currAmount; 
+    const percent = currAmt / totalAmt ;
+    setProgress(percent); 
+
+    return (
+      <View>
+        <ProgressBar 
+        progress={data.item.currAmount / data.item.totalAmount} 
+        width={200} 
+        height={25}
+        borderRadius={20}
+        color="#8a8a8a"
+        /> 
+      </View>
+    )
+  }
+
   const VisibleItem = props => {
     const {data} = props; 
 
@@ -121,9 +145,20 @@ const Wallet = (props) => {
           style={styles.rowFrontVisible}
           onPress={() => console.log("wallet element touched")}
           underlayColor={'#c5c5c5'}>
-          <View style={{flexDirection: 'column'}}>
+          <View style={{ flexDirection: 'column' }}>
             <Text style={styles.title}>{data.item.title}</Text>
             <Text style={styles.totalAmount}>${data.item.totalAmount}</Text>
+            <View style={{ top: 7, flexDirection: 'row' }}>
+            <ProgressBar 
+              progress={data.item.currAmount / data.item.totalAmount} 
+              width={200} 
+              height={25}
+              borderRadius={20}
+              color="#8a8a8a"
+            />  
+            <Text style={{ left: 10, color: '#666', fontWeight: 500 }}>
+              {((data.item.currAmount / data.item.totalAmount) * 100).toFixed(2)}%</Text>
+            </View>
           </View>
         </TouchableHighlight>
       </Animated.View>
@@ -246,8 +281,8 @@ const styles = StyleSheet.create({
     left: 5,
   },
   totalAmount: {
-    fontSize: 20, 
-    fontWeight: 'bold',
+    fontSize: 17, 
+    fontWeight: 600,
     color: '#666',
     left: 5, 
   },
