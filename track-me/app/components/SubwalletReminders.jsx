@@ -22,7 +22,7 @@ const Item = ({ title, id }) => (
   </View>
 )
 
-export const FlatListComponent = () => {
+export const SubwalletReminders = () => {
   const renderItem = ({ item }) => (
     <Item id={item.id} title={item.title} />
   )

@@ -208,7 +208,8 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
     width: 330,
-    height: 580
+    height: 580, 
+    top: 20,
   },
   scrollView: {
     backgroundColor: 'white',

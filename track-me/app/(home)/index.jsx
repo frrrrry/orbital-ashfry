@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useUserAuth } from "../../context/auth";
 import { useIsFocused } from '@react-navigation/native';
 import { getUser } from '../../firebase/firestore';
-import { FlatListComponent } from '../components/FlatListComponent';
+import { SubwalletReminders } from '../components/SubwalletReminders';
 
 export default function App() {
   const { user } = useUserAuth();
@@ -55,7 +55,7 @@ export default function App() {
           })}
         </Text>
       </View>
-      <FlatListComponent style={styles.flatListContainer} />
+      <SubwalletReminders style={styles.flatListContainer} />
     </View>
   );
 }
