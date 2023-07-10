@@ -49,7 +49,7 @@ const Wallet = (props) => {
   const isFocused = useIsFocused();
   
   const [listData, setListData] = useState([]); 
-
+  
   useEffect(() => {
     const result = wallets.map((walletItem) => ({
       key: walletItem.id,
@@ -62,15 +62,6 @@ const Wallet = (props) => {
     }))
     setListData(result); 
   }, [isFocused]);
-
-  /*
-  const [listData, setListData] = useState(
-    wallets.map((walletItem) => ({
-      key: walletItem.id,
-      title: walletItem.title,
-    }))
-  );
-  */
 
   const router = useRouter();
 
@@ -113,28 +104,14 @@ const Wallet = (props) => {
     setListData(newData);
   }
 
-  const [progress, setProgress] = useState(0); 
-
-  const ProgressBarComponent = props => {
-    const {data} = props;
-
-    const totalAmt = data.item.totalAmount; 
-    const currAmt = data.item.currAmount; 
-    const percent = currAmt / totalAmt ;
-    setProgress(percent); 
-
-    return (
-      <View>
-        <ProgressBar 
-        progress={data.item.currAmount / data.item.totalAmount} 
-        width={200} 
-        height={25}
-        borderRadius={20}
-        color="#8a8a8a"
-        /> 
-      </View>
-    )
+  const addMoney = async (rowMap, rowKey) => {
+    const walletItem = findArrayItemById(wallets, rowKey); 
+    AsyncStorage.setItem('walletId', rowKey); 
+    await AsyncStorage.setItem('walletCurrAmount', walletItem.currAmount);
+    router.push("/addmoneypage");
   }
+
+  const [progress, setProgress] = useState(0); 
 
   const VisibleItem = props => {
     const {data} = props; 
@@ -143,7 +120,7 @@ const Wallet = (props) => {
       <Animated.View style={styles.rowFront}> 
         <TouchableHighlight 
           style={styles.rowFrontVisible}
-          onPress={() => console.log("wallet element touched")}
+          onPress={addMoney}
           underlayColor={'#c5c5c5'}>
           <View style={{ flexDirection: 'column' }}>
             <Text style={styles.title}>{data.item.title}</Text>
@@ -157,7 +134,7 @@ const Wallet = (props) => {
               color="#8a8a8a"
             />  
             <Text style={{ left: 10, color: '#666', fontWeight: 500 }}>
-              {((data.item.currAmount / data.item.totalAmount) * 100).toFixed(2)}%</Text>
+              {((data.item.currAmount / data.item.totalAmount) * 100).toFixed(1)}%</Text>
             </View>
           </View>
         </TouchableHighlight>
@@ -233,7 +210,7 @@ const styles = StyleSheet.create({
     margin: 5,
     marginBottom: 15,
     top: -5, 
-    left: -5
+    left: -5,
   },
   rowFrontVisible: {
     backgroundColor: '#e1e1e1',

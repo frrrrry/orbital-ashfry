@@ -6,6 +6,7 @@ import { useUserAuth } from "../../context/auth";
 import { useIsFocused } from '@react-navigation/native';
 import { getUser } from '../../firebase/firestore';
 import { SubwalletReminders } from '../components/SubwalletReminders';
+import { getWallet } from '../../firebase/firestore';
 
 export default function App() {
   const { user } = useUserAuth();
@@ -34,6 +35,22 @@ export default function App() {
     loadData();
   }, [isFocused]);
 
+  // get wallets data from firebase
+  const [wallets, setWallets] = useState([]);
+  const isFocusedWallet = useIsFocused();
+
+  useEffect(() => {
+    const loadData = async () => {
+      try{ 
+        const result = await getWallet(user.uid);
+        setWallets(result);  
+      } catch (error) {
+        console.log("getWallet error in index", error); 
+      }
+    };
+    loadData();
+  }, [isFocusedWallet]);
+
   return (
     <View style={styles.container}>
       <View style={ styles.titleContainer }>
@@ -55,7 +72,7 @@ export default function App() {
           })}
         </Text>
       </View>
-      <SubwalletReminders style={styles.flatListContainer} />
+      <SubwalletReminders wallets={wallets} style={styles.flatListContainer} />
     </View>
   );
 }

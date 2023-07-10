@@ -300,7 +300,7 @@ export default function AddTransactionPage() {
               <Text style={ styles.setWhite }>Save</Text>
           </TouchableOpacity>
         </View>
-        {errMsg !== "" && <Text style={ {top: 80, left: 10} }>{errMsg}</Text>}
+        {errMsg !== "" && <Text style={ {top: 67, left: 10} }>{errMsg}</Text>}
       
       </View>
     </View>

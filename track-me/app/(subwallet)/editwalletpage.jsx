@@ -10,7 +10,7 @@ import { updateWallet } from '../../firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Link } from "expo-router";
 
-export default function AddWalletPage() {
+export default function EditWalletPage() {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const router = useRouter();
@@ -115,7 +115,7 @@ export default function AddWalletPage() {
       return;
     }
     if (currAmount < 0)  {
-      setErrMsg("Current Amount must be more than 0")
+      setErrMsg("Current Amount cannot be less than 0")
         return;
     }
     
@@ -126,7 +126,7 @@ export default function AddWalletPage() {
       setErrMsg(error.message)
       console.log("error message: ", error.message);
       console.log("uid:", user.uid);
-      console.log('error due to addWallet');
+      console.log('error due to addWallet in editwalletpage');
     }
       router.push("../(home)/subwallet");
     }

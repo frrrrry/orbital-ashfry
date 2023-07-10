@@ -17,8 +17,12 @@ export default function SubwalletPage() {
 
   useEffect(() => {
     const loadData = async () => {
-      const result = await getWallet(user.uid);
-      setWallets(result);
+      try {
+        const result = await getWallet(user.uid);
+        setWallets(result);
+      } catch (error) {
+        console.log("getWallet error in subwallet", error); 
+      }
     };
     loadData();
   }, [isFocused]);

@@ -104,12 +104,23 @@ export async function getWallet(uid) {
   return allWallets;
 }
 
-// update specifc subwallet with given uid
+// update specifc subwallet with wallet id
 export function updateWallet(id, title, totalAmount, currAmount, note, startDate, endDate ) {
   updateDoc(doc(db, SUBWALLET_COLLECTION, id), { title, totalAmount, currAmount, note, startDate, endDate });
 }
 
-// deletes subwallet with given uid
+// deletes subwallet with given wallet id
 export function deleteWallet(id) {
   deleteDoc(doc(db, SUBWALLET_COLLECTION, id));
+}
+
+// update currAmount of a specific subwallet with given wallet id
+export function updateCurrAmount(id, newAmount) {
+  const walletRef = doc(db, SUBWALLET_COLLECTION, id);
+  const newData = {
+    currAmount: newAmount
+  }
+  updateDoc(walletRef, newData)
+    .then(() => {console.log("currAmount is updated")})
+    .catch(error => console.log(error)); 
 }

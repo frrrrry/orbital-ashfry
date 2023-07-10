@@ -23,7 +23,7 @@ export default function ProfilePage() {
       await logOut();
       
     } catch (error) {
-      console.log(error.message);
+      console.log("logout error", error.message);
     }
   };
 
@@ -82,7 +82,7 @@ export default function ProfilePage() {
  
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.9 }}>
+      <View style={{ flex: 0.8, top: -15 }}>
         <Text style={styles.title}>User Profile</Text>
       </View>
  
@@ -98,13 +98,13 @@ export default function ProfilePage() {
         </View>
 
         <View style={ styles.display }>
-          <Text style={styles.subtitle}>username: </Text>
+          <Text style={styles.subtitle}>Username: </Text>
           <Text style={styles.displayText}>{username}</Text>
         </View>
         
         <View style={ styles.display }>
           <Text style={styles.subtitle}>
-            bio: 
+            Bio: 
           </Text>
           <Text style={styles.displayText}>{bio}</Text>
         </View>
@@ -142,20 +142,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   avatarContainer: {
-    width: 100,
-    height: 100,
+    width: 140,
+    height: 140,
     backgroundColor: "#E1E2E6",
-    borderRadius: 40,
+    borderRadius: 70,
     justifyContent: 'center',
     alignContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    top: -20, 
   },
   avatar: {
     position: 'absolute',
-    width: 100,
-    height: 100,
+    width: 140,
+    height: 140,
     backgroundColor: "#E1E2E6",
-    borderRadius: 40,
+    borderRadius: 70,
     justifyContent: 'center',
     alignContent: 'center',
     alignSelf: 'center'
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 10,
     left: 20,
-    top: 20,
+    top: 0,
   },
   signoutButton: {
     justifyContent: 'center',
@@ -204,7 +205,8 @@ const styles = StyleSheet.create({
   editprofileContainer: {
     color:'#fff',
     textAlign: 'center',
-    fontWeight: '500'
+    fontWeight: '500',
+    fontSize: 14, 
    },
   refreshContainer: {
     color:'#8A8A8A',
