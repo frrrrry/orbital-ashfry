@@ -106,21 +106,20 @@ const Wallet = (props) => {
 
   const addMoney = async (rowMap, rowKey) => {
     const walletItem = findArrayItemById(wallets, rowKey); 
+    console.log("walletItem", walletItem);
     AsyncStorage.setItem('walletId', rowKey); 
     await AsyncStorage.setItem('walletCurrAmount', walletItem.currAmount);
     router.push("/addmoneypage");
   }
 
-  const [progress, setProgress] = useState(0); 
-
   const VisibleItem = props => {
-    const {data} = props; 
+    const {data, onAdd} = props; 
 
     return (
       <Animated.View style={styles.rowFront}> 
         <TouchableHighlight 
           style={styles.rowFrontVisible}
-          onPress={addMoney}
+          onPress={onAdd}
           underlayColor={'#c5c5c5'}>
           <View style={{ flexDirection: 'column' }}>
             <Text style={styles.title}>{data.item.title}</Text>
@@ -142,10 +141,11 @@ const Wallet = (props) => {
     ); 
   }
 
-  const renderItem = (data) => {
+  const renderItem = (data, rowMap) => {
     return (
       <VisibleItem
         data={data}
+        onAdd={() => addMoney(rowMap, data.item.key)}
       />  
     );
   }

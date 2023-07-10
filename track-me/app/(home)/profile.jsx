@@ -82,7 +82,7 @@ export default function ProfilePage() {
  
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.8, top: -15 }}>
+      <View style={{ flex: 0.8, top: -40 }}>
         <Text style={styles.title}>User Profile</Text>
       </View>
  
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     alignSelf: 'center',
-    top: -20, 
+    top: -40, 
   },
   avatar: {
     position: 'absolute',
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 10,
     left: 20,
-    top: 0,
+    top: -20,
   },
   signoutButton: {
     justifyContent: 'center',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   editprofileContainer: {
     color:'#fff',
     textAlign: 'center',
-    fontWeight: '500',
+    fontWeight: '600',
     fontSize: 14, 
    },
   refreshContainer: {

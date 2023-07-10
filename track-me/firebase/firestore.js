@@ -120,7 +120,9 @@ export function updateCurrAmount(id, newAmount) {
   const newData = {
     currAmount: newAmount
   }
-  updateDoc(walletRef, newData)
-    .then(() => {console.log("currAmount is updated")})
+  updateDoc(walletRef, {
+    currAmount: newAmount
+  })
+    .then(() => {console.log("currAmount is updated", newAmount)})
     .catch(error => console.log(error)); 
 }
