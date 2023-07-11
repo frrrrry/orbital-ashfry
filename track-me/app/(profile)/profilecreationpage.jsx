@@ -1,14 +1,15 @@
 import { StyleSheet, View, TextInput, Image, TouchableOpacity } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Text } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useUserAuth } from "../../context/auth";
 import { updateUserProfile } from '../../firebase/firestore';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 import { firebase } from "../../firebase/firebase";
 import nulluseravatar from "../../assets/nulluseravatar.png";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProfileCreationPage() {
     const navigation = useNavigation();
@@ -19,8 +20,25 @@ export default function ProfileCreationPage() {
     const [errMsg, setErrMsg] = useState('');
     const { user } = useUserAuth();
     const router = useRouter();
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+      const getValueFunction = async () => {
+        AsyncStorage.getItem('avatarUrl').then(
+          (value) => setImage(value));
+
+        AsyncStorage.getItem('username').then(
+          (value) => setUsername(value)); 
+
+        AsyncStorage.getItem('bio').then(
+          (value) => setBio(value));
+      };
+      getValueFunction();
+  
+    }, [isFocused]);
 
     const addImage = async () => {
+      try {
         let img = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -32,6 +50,9 @@ export default function ProfileCreationPage() {
         if (!img.cancelled) {
             setImage(img.uri);
         }
+      } catch (error) {
+        console.log("addImage error in profilecreationpage", error);
+      }
     }
     
     const uploadImage = async (imageUri, avatarName) => {
@@ -64,7 +85,7 @@ export default function ProfileCreationPage() {
           () => {
             snapshot.snapshot.ref.getDownloadURL().then((url) => {
               setUploading(false)
-              console.log("Download URL: ", url)
+              console.log("Image successfully uploaded, Download URL: ", url)
               setImage(url)
               blob.close()
               return url

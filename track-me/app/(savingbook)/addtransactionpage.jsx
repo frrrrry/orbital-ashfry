@@ -292,15 +292,13 @@ export default function AddTransactionPage() {
         </View>
 
         {/* save button */}
-        <View style={{ flexDirection:"row", top: 115 }}>
-
-
+        <View style={{ flexDirection:"row", top: 120, alignSelf: 'center' }}>
           <TouchableOpacity activeOpacity={0.8} style={styles.saveContainer} 
             onPress={handleSave}>
               <Text style={ styles.setWhite }>Save</Text>
           </TouchableOpacity>
         </View>
-        {errMsg !== "" && <Text style={ {top: 80, left: 10} }>{errMsg}</Text>}
+        {errMsg !== "" && <Text style={{ top: 70, left: 0, alignSelf: 'center' }}>{errMsg}</Text>}
       
       </View>
     </View>
