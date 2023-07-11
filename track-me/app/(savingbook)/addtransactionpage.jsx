@@ -111,7 +111,7 @@ export default function AddTransactionPage() {
     console.log("type year", typeof(year));
     console.log("type month", typeof(month));
     try {
-      await addTransaction(user.uid, type, date, category, parseFloat(amount).toFixed(2), note, month, year);
+      await addTransaction(user.uid, type, date, category, parseFloat(amount), note, month, year);
     } catch (error) {
       setErrMsg(error.message)
       console.log("error message: ", error.message);
