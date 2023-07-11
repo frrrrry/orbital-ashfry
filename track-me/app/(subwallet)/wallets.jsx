@@ -106,7 +106,7 @@ const Wallet = (props) => {
 
   const addMoney = async (rowMap, rowKey) => {
     const walletItem = findArrayItemById(wallets, rowKey); 
-    console.log("walletItem", walletItem);
+    // console.log("walletItem", walletItem);
     AsyncStorage.setItem('walletId', rowKey); 
     await AsyncStorage.setItem('walletCurrAmount', walletItem.currAmount);
     router.push("/addmoneypage");

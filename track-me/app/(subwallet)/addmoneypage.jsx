@@ -140,15 +140,6 @@ const AddMoneyPage = (props) => {
     }
   }
 
-  const addAmount = (amt) => {
-    const newAmt = parseFloat(currAmount) + parseFloat(amt); 
-    console.log("newAmt", newAmt); 
-    console.log(typeof newAmt); 
-    setCurrAmount(newAmt); 
-    console.log("currAmount", currAmount);
-    console.log(typeof currAmount); 
-  }
-
   const handleSave = async () => {
     setErrMsg(''); 
     if (extraAmount < 0) {
@@ -157,8 +148,7 @@ const AddMoneyPage = (props) => {
     }
     
     try { 
-      addAmount(extraAmount);
-      await updateCurrAmount(walletId, parseFloat(currAmount).toFixed(2));  
+      await updateCurrAmount(walletId, (parseFloat(currAmount) + parseFloat(extraAmount)).toFixed(2));  
     } catch (error) {
       setErrMsg(errMsg);
       console.log("error message: ", error.message);
