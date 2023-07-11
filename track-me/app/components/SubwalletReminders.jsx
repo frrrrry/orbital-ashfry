@@ -1,5 +1,6 @@
-import React from "react"
-import { SafeAreaView, View, FlatList, StyleSheet, Text, } from "react-native"
+import { SafeAreaView, View, FlatList, StyleSheet, Text, } from "react-native";
+import { useState, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 
 const DATA = [
   {
@@ -16,21 +17,32 @@ const DATA = [
   },
 ];
 
-const Item = ({ title, id }) => (
+const Item = ({ title, totalAmount, currAmount, id }) => (
   <View key={id} style={styles.item}>
+    <Text style={styles.percentage}>
+      {((currAmount / totalAmount) * 100).toFixed(1)}%</Text>
+    <Text style={styles.subText}>closer towards:</Text>
     <Text style={styles.title}>{title}</Text>
   </View>
 )
 
-export const SubwalletReminders = () => {
+export const SubwalletReminders = (props) => {
+  const wallets = props.wallets;
+  // console.log("subwallet reminders", wallets); 
+
   const renderItem = ({ item }) => (
-    <Item id={item.id} title={item.title} />
+    <Item 
+      id={item.id} 
+      title={item.title} 
+      totalAmount={item.totalAmount}
+      currAmount={item.currAmount} 
+    />
   )
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={DATA}
+        data={wallets}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         horizontal
@@ -44,16 +56,34 @@ const styles = StyleSheet.create({
     flex: 1
   },
   item: {
-    backgroundColor: "#c5c5c5",
+    backgroundColor: "#e1e1e1",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
     height: 170,
     width: 220,
-    borderRadius: 20
+    borderRadius: 20,
+    shadowColor: '#999',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
   title: {
-    fontSize: 15,
-    textAlign: 'center',
+    fontSize: 20,
+    textAlign: 'left',
+    top: 10, 
+    color: '#EF2323', 
+    fontWeight: 'bold', 
   },
+  percentage: {
+    fontSize: 30, 
+    fontWeight: 'bold',
+    textAlign:'left',
+    color: '#585858',
+  }, 
+  subText: {
+    fontSize: 15, 
+    color: '#8a8a8a'
+  }, 
 })

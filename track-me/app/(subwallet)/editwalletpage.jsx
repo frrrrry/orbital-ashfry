@@ -330,7 +330,7 @@ export default function AddWalletPage() {
                 <Text style={ styles.setWhite }>Save</Text>
             </TouchableOpacity>
           </View>
-          {errMsg !== "" && <Text style={ {top: 30, left: 10} }>{errMsg}</Text>}
+          {errMsg !== "" && <Text style={{ top: 30, alignSelf: 'center' }}>{errMsg}</Text>}
           
         </View>
       </View>

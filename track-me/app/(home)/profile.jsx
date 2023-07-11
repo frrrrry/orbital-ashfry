@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Image, TouchableOpacity, RefreshControl } from 'react-native';
 import { Text, Button } from "react-native-paper";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useUserAuth } from "../../context/auth";
 import { addUserProfile, getUser } from '../../firebase/firestore';
 import { useState, useEffect } from 'react';
@@ -9,8 +9,6 @@ import { useIsFocused } from '@react-navigation/native';
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { firebase } from "../../firebase/firebase";
 import nulluseravatar from "../../assets/nulluseravatar.png";
-import { set } from 'date-fns';
-import { connectStorageEmulator } from 'firebase/storage';
 
 export default function ProfilePage() {
   const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
@@ -79,15 +77,25 @@ export default function ProfilePage() {
     .catch((err) => console.log('error on image deletion => ', err));
   }
   */
+
+  const router = useRouter();
+
+  const handleEdit = async () => {
+    AsyncStorage.setItem('uid', user.uid);
+    AsyncStorage.setItem('username', username);
+    AsyncStorage.setItem('bio', bio);
+    router.push("/profilecreationpage");
+  }
+
  
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.9 }}>
+      <View style={{ flex: 0.9, top: -30 }}>
         <Text style={styles.title}>User Profile</Text>
       </View>
  
-      <View style={{ flex: 1 }}>
-        <View>
+      <View style={{ flex: 1, top: -30 }}>
+        <View style={{ top: -20 }}>
           <TouchableOpacity style={ styles.avatarContainer }>
           <Image 
             style={ styles.avatar } 
@@ -111,7 +119,7 @@ export default function ProfilePage() {
 
       </View>
 
-      <View style={{ flex: 0.7 }}>
+      <View style={{ flex: 0.7, top: 0 }}>
       
         <TouchableOpacity onPress={handleRefresh}>
           <Text style={styles.refreshContainer}>Refresh</Text>
@@ -142,20 +150,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   avatarContainer: {
-    width: 100,
-    height: 100,
+    width: 140,
+    height: 140,
     backgroundColor: "#E1E2E6",
-    borderRadius: 40,
+    borderRadius: 70,
     justifyContent: 'center',
     alignContent: 'center',
     alignSelf: 'center'
   },
   avatar: {
     position: 'absolute',
-    width: 100,
-    height: 100,
+    width: 140,
+    height: 140,
     backgroundColor: "#E1E2E6",
-    borderRadius: 40,
+    borderRadius: 70,
     justifyContent: 'center',
     alignContent: 'center',
     alignSelf: 'center'
@@ -184,7 +192,7 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 10,
     left: 20,
-    top: 20,
+    top: 0,
   },
   signoutButton: {
     justifyContent: 'center',

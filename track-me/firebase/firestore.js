@@ -113,3 +113,16 @@ export function updateWallet(id, title, totalAmount, currAmount, note, startDate
 export function deleteWallet(id) {
   deleteDoc(doc(db, SUBWALLET_COLLECTION, id));
 }
+
+// update currAmount of a specific subwallet with given wallet id
+export function updateCurrAmount(id, newAmount) {
+  const walletRef = doc(db, SUBWALLET_COLLECTION, id);
+  const newData = {
+    currAmount: newAmount
+  }
+  updateDoc(walletRef, {
+    currAmount: newAmount
+  })
+    .then(() => {console.log("currAmount is updated", newAmount)})
+    .catch(error => console.log(error)); 
+}
