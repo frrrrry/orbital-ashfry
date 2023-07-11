@@ -22,6 +22,7 @@ const AddMoneyPage = (props) => {
   const [errMsg, setErrMsg] = useState('');
   const [walletId, setWalletId] = useState('');
   const [currAmount, setCurrAmount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [extraAmount, setExtraAmount] = useState(0);
   const [fiveShow, setFiveShow] = useState("#f2f2f2");
   const [tenShow, setTenShow] = useState("#f2f2f2");
@@ -29,7 +30,6 @@ const AddMoneyPage = (props) => {
   const [twentyShow, setTwentyShow] = useState("#f2f2f2");
   const [fiftyShow, setFiftyShow] = useState("#f2f2f2");
   const [hundredShow, setHundredShow] = useState("#f2f2f2"); 
-  const [selected, setSelected] = useState("#f2f2f2");
   const router = useRouter();
   const isFocused = useIsFocused();
 
@@ -41,6 +41,9 @@ const AddMoneyPage = (props) => {
 
       JSON.parse(JSON.stringify(AsyncStorage.getItem('walletCurrAmount').then(
         (value) => setCurrAmount(value))));
+
+      JSON.parse(JSON.stringify(AsyncStorage.getItem('walletTotalAmount').then(
+        (value) => setTotalAmount(value))));
     }
     getValueFunction();
 
@@ -146,6 +149,11 @@ const AddMoneyPage = (props) => {
       setErrMsg("Top-up amount cannot be less than 0")
       return; 
     }
+    if ((parseFloat(currAmount) + parseFloat(extraAmount)) > 
+      parseFloat(totalAmount)) {
+      setErrMsg("Top-up amount cannot exceed total amount") 
+      return; 
+    }
     
     try { 
       await updateCurrAmount(walletId, (parseFloat(currAmount) + parseFloat(extraAmount)).toFixed(2));  
@@ -174,28 +182,12 @@ const AddMoneyPage = (props) => {
 
         {/* first row */}
         <View style={{ flexDirection:"row", top: -15, alignSelf: 'center' }}>
-          <TouchableOpacity style={{ 
-            height: 66, 
-            width: 112,
-            backgroundColor: fiveShow,
-            borderRadius: 10,
-            borderWidth: 1,  
-            borderColor: "#8a8a8a",
-            justifyContent: 'center',
-            }} 
+          <TouchableOpacity style={[{ backgroundColor: fiveShow }, styles.amountItem]} 
           onPress={addFive}>
             <Text style={styles.amount}>$5</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{ width: 40 }}/>
-          <TouchableOpacity style={{ 
-            height: 66, 
-            width: 112,
-            backgroundColor: tenShow,
-            borderRadius: 10,
-            borderWidth: 1,  
-            borderColor: "#8a8a8a",
-            justifyContent: 'center',
-            }}  
+          <TouchableOpacity style={[{ backgroundColor: tenShow }, styles.amountItem]} 
             onPress={addTen}>
             <Text style={styles.amount}>$10</Text>
           </TouchableOpacity>
@@ -203,28 +195,12 @@ const AddMoneyPage = (props) => {
 
         {/* second row */}
         <View style={{ flexDirection:"row", top: 0, alignSelf: 'center' }}>
-          <TouchableOpacity style={{ 
-            height: 66, 
-            width: 112,
-            backgroundColor: fifteenShow,
-            borderRadius: 10,
-            borderWidth: 1,  
-            borderColor: "#8a8a8a",
-            justifyContent: 'center',
-            }}  
+          <TouchableOpacity style={[{ backgroundColor: fifteenShow }, styles.amountItem]}  
             onPress={addFifteen}>
             <Text style={styles.amount}>$15</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{ width: 40 }}/>
-          <TouchableOpacity style={{ 
-            height: 66, 
-            width: 112,
-            backgroundColor: twentyShow,
-            borderRadius: 10,
-            borderWidth: 1,  
-            borderColor: "#8a8a8a",
-            justifyContent: 'center',
-            }}  
+          <TouchableOpacity style={[{ backgroundColor: twentyShow }, styles.amountItem]}  
             onPress={addTwenty}>
             <Text style={styles.amount}>$20</Text>
           </TouchableOpacity>
@@ -232,28 +208,12 @@ const AddMoneyPage = (props) => {
 
         {/* third row */}
         <View style={{ flexDirection:"row", top: 15, alignSelf: 'center' }}>
-          <TouchableOpacity style={{ 
-            height: 66, 
-            width: 112,
-            backgroundColor: fiftyShow,
-            borderRadius: 10,
-            borderWidth: 1,  
-            borderColor: "#8a8a8a",
-            justifyContent: 'center',
-            }}  
+          <TouchableOpacity style={[{ backgroundColor: fiftyShow }, styles.amountItem]}  
             onPress={addFifty}>
             <Text style={styles.amount}>$50</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{ width: 40 }}/>
-          <TouchableOpacity style={{ 
-            height: 66, 
-            width: 112,
-            backgroundColor: hundredShow,
-            borderRadius: 10,
-            borderWidth: 1,  
-            borderColor: "#8a8a8a",
-            justifyContent: 'center',
-            }}  
+          <TouchableOpacity style={[{ backgroundColor: hundredShow }, styles.amountItem]}  
             onPress={addHundred}>
             <Text style={styles.amount}>$100</Text>
           </TouchableOpacity>
@@ -277,13 +237,13 @@ const AddMoneyPage = (props) => {
         </View>
 
         {/* save button */}
-        <View style={{ flexDirection:"row", top: 80, alignSelf: 'center' }}>
+        <View style={{ flexDirection:"row", top: 80, alignItems: 'center' }}>
           <TouchableOpacity activeOpacity={0.8} style={styles.saveContainer} 
             onPress={handleSave}>
             <Text style={ styles.setWhite }>Save</Text>
           </TouchableOpacity>
         </View>
-        {errMsg !== "" && <Text style={{ top: 30, alignSelf: 'center' }}>{errMsg}</Text>}
+        {errMsg !== "" && <Text style={{ top: 10, alignSelf: 'center' }}>{errMsg}</Text>}
 
       </View>
     </View>
@@ -311,6 +271,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#000", 
   }, 
+  amountItem: {
+    height: 66, 
+    width: 112,
+    borderRadius: 10,
+    borderWidth: 1,  
+    borderColor: "#8a8a8a",
+    justifyContent: 'center',
+  },
   inputContainer: {
     height: 52, 
     width: 265, 

@@ -60,6 +60,7 @@ const Wallet = (props) => {
       totalAmount: walletItem.totalAmount,
       currAmount: walletItem.currAmount,
     }))
+    
     setListData(result); 
   }, [wallets]);
 
@@ -132,7 +133,8 @@ const Wallet = (props) => {
           underlayColor={'#c5c5c5'}>
           <View style={{ flexDirection: 'column' }}>
             <Text style={styles.title}>{data.item.title}</Text>
-            <Text style={styles.totalAmount}>${data.item.totalAmount}</Text>
+            <Text style={styles.totalAmount}>
+              ${data.item.currAmount} / ${data.item.totalAmount}</Text>
             <View style={{ top: 7, flexDirection: 'row' }}>
             <ProgressBar 
               progress={data.item.currAmount / data.item.totalAmount} 
