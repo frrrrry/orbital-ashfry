@@ -9,6 +9,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { firebase } from "../../firebase/firebase";
 import nulluseravatar from "../../assets/nulluseravatar.png";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProfilePage() {
   const nullAvatar = Image.resolveAssetSource(nulluseravatar).uri; 
@@ -53,6 +54,7 @@ export default function ProfilePage() {
     };
 
     let imageRef = firebase.storage().ref('/' + user.uid);
+    // console.log("imageRef: ", imageRef);
     if (imageRef) {
       imageRef
       .getDownloadURL()
@@ -61,7 +63,7 @@ export default function ProfilePage() {
       })
       .catch((err) => console.log('getting downloadUrl of image error => ', err));
     } 
-
+    // console.log("avatarUrl", avatarUrl); 
     loadData();
     setRefresh(false);
   }, [refresh]);
@@ -81,7 +83,7 @@ export default function ProfilePage() {
   const router = useRouter();
 
   const handleEdit = async () => {
-    AsyncStorage.setItem('uid', user.uid);
+    AsyncStorage.setItem('avatarUrl', avatarUrl);
     AsyncStorage.setItem('username', username);
     AsyncStorage.setItem('bio', bio);
     router.push("/profilecreationpage");
@@ -125,14 +127,12 @@ export default function ProfilePage() {
           <Text style={styles.refreshContainer}>Refresh</Text>
         </TouchableOpacity>
 
-        <View style={styles.profileContainer}>
-          <Link href="../(profile)/profilecreationpage">
-            <Text style={styles.editprofileContainer}>Edit Profile</Text>
-          </Link>
-        </View>
-
+        <Button onPress={handleEdit} 
+                  mode="contained" buttonColor="#c5c5c5" style={ styles.button }>
+                      Edit Profile</Button>
+        <TouchableOpacity style={{ height: 8 }}/>
         <Button onPress={handleLogout} 
-                  mode="contained" buttonColor="#c5c5c5" style={ styles.signoutButton }>
+                  mode="contained" buttonColor="#c5c5c5" style={ styles.button }>
                       Sign out</Button>
         
       </View>
@@ -194,12 +194,12 @@ const styles = StyleSheet.create({
     left: 20,
     top: 0,
   },
-  signoutButton: {
+  button: {
     justifyContent: 'center',
     alignContent: 'center',
     width: 140,
     height: 45,
-    top: 10,
+    top: 0,
   },
   profileContainer: {
     justifyContent: 'center',

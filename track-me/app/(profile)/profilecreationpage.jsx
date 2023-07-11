@@ -24,8 +24,9 @@ export default function ProfileCreationPage() {
 
     useEffect(() => {
       const getValueFunction = async () => {
-        // Function to get the value from AsyncStorage
-        
+        AsyncStorage.getItem('avatarUrl').then(
+          (value) => setImage(value));
+
         AsyncStorage.getItem('username').then(
           (value) => setUsername(value)); 
 
@@ -37,6 +38,7 @@ export default function ProfileCreationPage() {
     }, [isFocused]);
 
     const addImage = async () => {
+      try {
         let img = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -48,6 +50,9 @@ export default function ProfileCreationPage() {
         if (!img.cancelled) {
             setImage(img.uri);
         }
+      } catch (error) {
+        console.log("addImage error in profilecreationpage", error);
+      }
     }
     
     const uploadImage = async (imageUri, avatarName) => {
@@ -80,7 +85,7 @@ export default function ProfileCreationPage() {
           () => {
             snapshot.snapshot.ref.getDownloadURL().then((url) => {
               setUploading(false)
-              console.log("Download URL: ", url)
+              console.log("Image successfully uploaded, Download URL: ", url)
               setImage(url)
               blob.close()
               return url
