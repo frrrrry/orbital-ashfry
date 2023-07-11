@@ -61,7 +61,7 @@ const Wallet = (props) => {
       currAmount: walletItem.currAmount,
     }))
     setListData(result); 
-  }, [isFocused]);
+  }, [wallets]);
 
   /*
   const [listData, setListData] = useState(
