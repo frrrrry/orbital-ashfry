@@ -45,6 +45,9 @@ export default function LoginPage() {
             else if (err.message == "Firebase: Error (auth/wrong-password).") {
                 setErrMsg("Wrong password");
             }
+            else if (err.message == "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).") {
+                setErrMsg("Access to this account has been temporarily disabled due to many failed login attempts. You can restore it by resetting your password.");
+            }
             else {
                 setErrMsg(err.message);
             }
@@ -90,7 +93,7 @@ export default function LoginPage() {
                 <Button onPress={handleLogin} 
                 mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer } testID="signinButton">
                     Sign in</Button>
-                {errMsg !== "" && <Text style={ {top:20} }>{errMsg}</Text>}
+                {errMsg !== "" && <Text style={ {top:20, width: 300} }>{errMsg}</Text>}
                 {loading && <ActivityIndicator color="black" style={ styles.submitContainer }/>}
 
             </View>

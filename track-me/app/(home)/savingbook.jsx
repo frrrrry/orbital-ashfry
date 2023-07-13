@@ -173,7 +173,7 @@ export default function SavingBookPage() {
       </View>
 
       {/* transaction rows */}
-      <View style={{ flex: 3.6 }}>
+      <View style={{ flex: 4.5 }}>
         <SafeAreaView style={styles.contentContainer}>
           <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
           

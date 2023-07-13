@@ -1,6 +1,6 @@
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { Text } from "react-native-paper";
+import { Text, ActivityIndicator } from "react-native-paper";
 import { Icon } from '@rneui/themed'; 
 import { useUserAuth } from "../../context/auth";
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 export default function ForgetpasswordPage() {  
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showMsg, setShowMsg] = useState(false);
   const [errMsg, setErrMsg] = useState('');
   const { resetPassword } = useUserAuth();
 
@@ -17,7 +19,10 @@ export default function ForgetpasswordPage() {
         setErrMsg("email cannot be empty")
         return;
     }
+
     try {
+      setLoading(true);
+      setShowMsg(false);
       await resetPassword(email);
       
       
@@ -35,8 +40,13 @@ export default function ForgetpasswordPage() {
         setErrMsg(err.message);
       }
       console.log(err.message);
-    } 
+    } finally {
+      setLoading(false);
+      setShowMsg(true);
+    }
+
   }
+
   return (
     <View style={styles.container}>
 
@@ -72,6 +82,8 @@ export default function ForgetpasswordPage() {
           
         </View>
         {errMsg !== "" && <Text style={ {top:40} }>{errMsg}</Text>}
+        {showMsg && errMsg == "" && <Text style={ {top:40} }>An email has been sent</Text>}
+        {loading && <ActivityIndicator color="black" style={ styles.submitContainer }/>}
         
       </View>
 
@@ -138,5 +150,11 @@ const styles = StyleSheet.create({
   },
   loading: {
     buttom:100,
-  }
+  }, 
+  submitContainer: {
+    top: 30,
+    color: "#c5c5c5",
+    width: 300,
+    height: 45,
+  },
   });
