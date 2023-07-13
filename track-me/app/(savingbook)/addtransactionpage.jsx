@@ -37,8 +37,8 @@ export default function AddTransactionPage() {
   // for date picker
   const [date, setDate] = useState(new Date());
   const [dateshow, setdateShow] = useState(false);
-  const [month, setMonth] = useState(0);
-  const [year, setYear] = useState(0);
+  const [month, setMonth] = useState(date.getMonth() + 1);
+  const [year, setYear] = useState(date.getFullYear());
 
   let Todaydate = new Date(Date.now());
   Todaydate = Todaydate.getDate() + '/' + (Todaydate.getMonth() + 1) 
@@ -46,6 +46,11 @@ export default function AddTransactionPage() {
 
   const [displayDate, setdisplayDate] = useState(Todaydate);
 
+  console.log(date);
+  console.log(month);
+  console.log(year);
+  console.log("---------------");
+  
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setdateShow(false);
@@ -59,6 +64,7 @@ export default function AddTransactionPage() {
 
     setMonth(tempDate.getMonth() + 1);
     setYear(tempDate.getFullYear());
+    console.log(tempDate);
   };
 
   const test = date.getMonth() + 1;
@@ -94,10 +100,6 @@ export default function AddTransactionPage() {
     }
     if (category == '') {
       setErrMsg("Category cannot be empty")
-      return;
-    }
-    if (amount == 0) {
-      setErrMsg("Amount cannot be empty")
       return;
     }
     else if (amount <= 0) {
@@ -266,6 +268,7 @@ export default function AddTransactionPage() {
               style={styles.input}
               autoCapitalize='none'
               keyboardType = 'numeric'
+              maxLength={13}
               value={String(amount)}
               onChangeText={(text) => {
                 const validated = text.match(/^(\d*\.{0,1}\d{0,2}$)/)
@@ -287,6 +290,7 @@ export default function AddTransactionPage() {
               style={styles.input}
               autoCapitalize='none'
               value={note}
+              maxLength={50}
               onChangeText={setNote} />
           </View>
         </View>

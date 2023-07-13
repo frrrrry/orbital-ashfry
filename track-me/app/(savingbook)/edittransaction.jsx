@@ -132,20 +132,6 @@ export default function EditTransactionPage() {
     if (category == '') {
       setErrMsg("Category cannot be empty")
       return;
-    }
-    if (amount == 0) {
-      setErrMsg("Amount cannot be empty")
-      console.log("type amount", typeof(amount));
-      console.log("amount", amount);
-      console.log("substring amount", amount.substring(0,1));
-      if (amount.substring(0,1) == ".") {
-        const string_amount = '0' + amount;
-        setAmount(string_amount);
-      }
-      console.log("string amount", amount);
-      console.log("type amount", typeof(parseFloat(amount)));
-      console.log("amount", amount);
-      return;
     } else if (amount <= 0) {
       setErrMsg("Amount must be more than 0")
       return;
@@ -325,6 +311,7 @@ export default function EditTransactionPage() {
               style={styles.input}
               autoCapitalize='none'
               keyboardType = 'numeric'
+              maxLength={13}
               value={String(amount)}
               onChangeText={(text) => {
                 const validated = text.match(/^(\d*\.{0,1}\d{0,2}$)/)
@@ -347,6 +334,7 @@ export default function EditTransactionPage() {
             <TextInput
               style={styles.input}
               autoCapitalize='none'
+              maxLength={50}
               value={note}
               onChangeText={setNote} />
           </View>

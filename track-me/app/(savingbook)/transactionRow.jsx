@@ -42,15 +42,15 @@ export default function TransactionRow(props) {
           <Text style={{ fontWeight: "bold" }}>{format(transaction.date, 'dd MMM')}</Text>
 
             <View style={{ flexDirection:"row", top: 0  }}>
-              <View style={{ width: 95 }}>
+              <View style={{ width: 55 }}>
                 <Text>{transaction.category}</Text>
               </View>
 
-              <View style={{ width: 105 }}>
+              <View style={{ width: 130 }}>
                 <Text>{transaction.note}</Text>
               </View>
 
-              <View style={{ width: 105 }}>
+              <View style={{ width: 120 }}>
                 <Text style={{ textAlign: "right", color: amountColor }}>${parseFloat(transaction.amount).toFixed(2)}</Text>
               </View>
             </View>
@@ -62,7 +62,7 @@ export default function TransactionRow(props) {
 
 const styles = StyleSheet.create({
   container: {
-      height: 50
+      height: 60
   },
   scrollView: {
     backgroundColor: 'white',
