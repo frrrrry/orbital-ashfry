@@ -122,6 +122,43 @@ const Wallet = (props) => {
     router.push("/addmoneypage");
   }
 
+  const convertMsToDays = ms => {
+    const msInOneSecond = 1000
+    const secondsInOneMinute = 60
+    const minutesInOneHour = 60
+    const hoursInOneDay = 24
+  
+    const minutesInOneDay = hoursInOneDay * minutesInOneHour
+    const secondsInOneDay = secondsInOneMinute * minutesInOneDay
+    const msInOneDay = msInOneSecond * secondsInOneDay
+  
+    return Math.ceil(ms / msInOneDay)
+  }
+  
+  const getDaysBetweenDates = (dateOne, dateTwo) => {
+    let differenceInMs = dateTwo.getTime() - dateOne.getTime()
+  
+    if (differenceInMs < 0) {
+      differenceInMs = dateOne.getTime() - dateTwo.getTime()
+    }
+  
+    return convertMsToDays(differenceInMs)
+  }
+  
+  const convertToDate = (date) => {
+    let tempDate = ''; 
+    if (date.getMonth() + 1 > 9) {
+      tempDate = tempDate + (date.getMonth() + 1) + '/' + date.getDate()
+        + '/' + date.getFullYear();
+    } else {
+      tempDate = tempDate + '0' + (date.getMonth() + 1) + '/' + date.getDate()
+        + '/' + date.getFullYear();
+    }
+    return tempDate; 
+  }
+
+  // const dateDiff = getDaysBetweenDates(new Date(Date.now()), endDate);
+
   const VisibleItem = props => {
     const {data, onAdd} = props; 
 
@@ -132,7 +169,12 @@ const Wallet = (props) => {
           onPress={onAdd}
           underlayColor={'#c5c5c5'}>
           <View style={{ flexDirection: 'column' }}>
-            <Text style={styles.title}>{data.item.title}</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.title}>{data.item.title}</Text>
+              <Text style={styles.date}>
+                {getDaysBetweenDates(new Date(Date.now()), data.item.endDate).toString()} days left
+              </Text>
+            </View>
             <Text style={styles.totalAmount}>
               ${data.item.currAmount} / ${data.item.totalAmount}</Text>
             <View style={{ top: 7, flexDirection: 'row' }}>
@@ -267,6 +309,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color: '#666',
     left: 5,
+    width: 200, 
+    height: 30,
+  },
+  date: {
+    textAlign: 'right', 
+    color: "#8a8a8a", 
+    width: 90,
+    height: 30,
   },
   totalAmount: {
     fontSize: 17, 
