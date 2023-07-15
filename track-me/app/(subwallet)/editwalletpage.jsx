@@ -122,7 +122,7 @@ export default function AddWalletPage() {
       setErrMsg("End Date cannot be before Start Date")
       return; 
     }
-    if (currAmount > totalAmount) {
+    if (parseFloat(currAmount) > parseFloat(totalAmount)) {
       setErrMsg("Current Amount cannot be more than Total Amount")
       return; 
     }
