@@ -118,7 +118,15 @@ export default function AddWalletPage() {
       setErrMsg("Current Amount must be more than 0")
         return;
     }
-    
+    if (endDate < startDate) {
+      setErrMsg("End Date cannot be before Start Date")
+      return; 
+    }
+    if (currAmount > totalAmount) {
+      setErrMsg("Current Amount cannot be more than Total Amount")
+      return; 
+    }
+
     // add to firestore collection 
     try {
       await updateWallet(walletId, title, parseFloat(totalAmount).toFixed(2), parseFloat(currAmount).toFixed(2), note, startDate, endDate);
@@ -330,7 +338,7 @@ export default function AddWalletPage() {
                 <Text style={ styles.setWhite }>Save</Text>
             </TouchableOpacity>
           </View>
-          {errMsg !== "" && <Text style={{ top: 30, alignSelf: 'center' }}>{errMsg}</Text>}
+          {errMsg !== "" && <Text style={{ top: 20, alignSelf: 'center', textAlign: 'center' }}>{errMsg}</Text>}
           
         </View>
       </View>
