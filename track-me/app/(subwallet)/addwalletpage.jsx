@@ -143,7 +143,9 @@ export default function AddWalletPage() {
                   placeholder='title'
                   autoCapitalize='none'
                   value={title}
-                  onChangeText={setTitle} />
+                  onChangeText={setTitle}
+                  maxLength={15}  
+               />
               </View>
             </View>
 

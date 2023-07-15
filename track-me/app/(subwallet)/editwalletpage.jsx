@@ -24,6 +24,7 @@ export default function AddWalletPage() {
   const [currAmount, setCurrAmount] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [daysDiff, setDaysDiff] = useState(0); 
 
   useEffect(() => {
     const getValueFunction = async () => {
@@ -164,7 +165,9 @@ export default function AddWalletPage() {
                 style={styles.input}
                 autoCapitalize='none'
                 value={title}
-                onChangeText={setTitle} />
+                onChangeText={setTitle}
+                maxLength={15}  
+              />
             </View>
           </View>
 

@@ -1,6 +1,7 @@
 import { SafeAreaView, View, FlatList, StyleSheet, Text, } from "react-native";
 import { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
+import differenceInDays from 'date-fns';
 
 const DATA = [
   {
@@ -17,14 +18,18 @@ const DATA = [
   },
 ];
 
-const Item = ({ title, totalAmount, currAmount, id }) => (
-  <View key={id} style={styles.item}>
-    <Text style={styles.percentage}>
-      {((currAmount / totalAmount) * 100).toFixed(1)}%</Text>
-    <Text style={styles.subText}>closer towards:</Text>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-)
+const Item = ({ title, totalAmount, currAmount, id, }) => {
+
+  return (
+    <View key={id} style={styles.item}>
+      <Text style={styles.percentage}>
+        {((currAmount / totalAmount) * 100).toFixed(1)}%</Text>
+      <Text style={styles.subText}>closer towards:</Text>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.daysLeft}></Text>
+    </View>
+  )
+}
 
 export const SubwalletReminders = (props) => {
   const wallets = props.wallets;
@@ -85,5 +90,9 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 15, 
     color: '#8a8a8a'
+  }, 
+  daysLeft: {
+    fontSize: 15, 
+    color: "#8a8a8a",
   }, 
 })
