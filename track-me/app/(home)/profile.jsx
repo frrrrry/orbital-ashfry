@@ -108,7 +108,7 @@ export default function ProfilePage() {
         </View>
 
         <View style={ styles.display }>
-          <Text style={styles.subtitle}>username: </Text>
+          <Text style={styles.subtitle}>username:</Text>
           <Text style={styles.displayText}>{username}</Text>
         </View>
         

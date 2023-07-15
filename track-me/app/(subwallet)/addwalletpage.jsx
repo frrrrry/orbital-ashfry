@@ -69,26 +69,40 @@ export default function AddWalletPage() {
                     + '/' + tempEndDate.getFullYear();
         setdisplayEndDate(fEndDate);
         console.log('end date', displayEndDate);
+        const endDateOther = new Date("15/7/2012") == new Date("15/6/2013");
+        console.log("end date other", endDateOther); 
     };
 
     const showEndCalender = () => {setEndDateShow(true); };
 
+    const dateConverter = (date) => {
+    
+    }
+
     const handleSave = async () => {
         setErrMsg('');
         if (title == '') {
-            setErrMsg("Title cannot be empty")
-            return;
+          setErrMsg("Title cannot be empty")
+          return;
         }
         if (totalAmount == 0) {
-            setErrMsg("Total Amount cannot be empty")
-            return;
+          setErrMsg("Total Amount cannot be empty")
+          return;
         } else if (totalAmount <= 0) {
-            setErrMsg("Total Amount must be more than 0")
-            return;
+          setErrMsg("Total Amount must be more than 0")
+          return;
         }
         if (currAmount < 0)  {
-            setErrMsg("Current Amount must be more than 0")
-            return;
+          setErrMsg("Current Amount must be more than 0")
+          return;
+        } 
+        if (endDate < startDate) {
+          setErrMsg("End Date cannot be before Start Date")
+          return; 
+        }
+        if (currAmount > totalAmount) {
+          setErrMsg("Current Amount cannot be more than Total Amount")
+          return; 
         }
     
         // add to firestore collection 
@@ -304,7 +318,7 @@ export default function AddWalletPage() {
                   <Text style={ styles.setWhite }>Save</Text>
               </TouchableOpacity>
             </View>
-            {errMsg !== "" && <Text style={{ top: 30, alignSelf: 'center' }}>{errMsg}</Text>}
+            {errMsg !== "" && <Text style={{ top: 20, alignSelf: 'center', textAlign: 'center' }}>{errMsg}</Text>}
           
           </View>
         </View>
