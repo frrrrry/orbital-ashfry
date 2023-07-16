@@ -1,7 +1,7 @@
 
 import React from 'react';
+import FrontPage from "../frontpage"; 
 import { render } from '@testing-library/react-native';
-import FrontPage from '../frontpage';
 
 describe('welcome screen', () => {
     /*
@@ -9,6 +9,9 @@ describe('welcome screen', () => {
         render(<FrontPage />);
     })
     */
+    it ('should return false', () => {
+      expect(false).toBeTruthy(); 
+    })
 
     it('should navigate to login page when sign in button pressed', async () => {
         // given
