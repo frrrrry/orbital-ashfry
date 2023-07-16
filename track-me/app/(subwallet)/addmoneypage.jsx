@@ -145,6 +145,7 @@ const AddMoneyPage = (props) => {
 
   const handleSave = async () => {
     setErrMsg(''); 
+    // console.log("exceed total amount", (parseFloat(currAmount) + parseFloat(extraAmount)) > parseFloat(totalAmount));
     if (extraAmount < 0) {
       setErrMsg("Top-up amount cannot be less than 0")
       return; 

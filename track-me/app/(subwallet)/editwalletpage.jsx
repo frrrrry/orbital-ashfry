@@ -56,14 +56,22 @@ export default function AddWalletPage() {
 
   }, [isFocused]);
 
+  const convertToDate = (date) => {
+    tempDate = date.getDate() + '/' + (date.getMonth() + 1) 
+                  + '/' + date.getFullYear();
+    return tempDate; 
+  }
+
   // for start date picker
   const [startDateShow, setStartDateShow] = useState(false);
+
+  const prevStartDate = convertToDate(startDate);
 
   let TodayStartDate = new Date(Date.now());
     TodayStartDate = TodayStartDate.getDate() + '/' + (TodayStartDate.getMonth() + 1) 
                   + '/' + TodayStartDate.getFullYear();
 
-  const [displayStartDate, setdisplayStartDate] = useState(TodayStartDate);
+  const [displayStartDate, setdisplayStartDate] = useState(prevStartDate);
 
   const onStartChange = (event, selectedStartDate) => {
     const currentStartDate = selectedStartDate || startDate;
@@ -82,11 +90,13 @@ export default function AddWalletPage() {
   // for end date picker
   const [endDateShow, setEndDateShow] = useState(false);
 
+  const prevEndDate = convertToDate(endDate);
+
   let TodayEndDate = new Date(Date.now());
   TodayEndDate = TodayEndDate.getDate() + '/' + (TodayEndDate.getMonth() + 1) 
                   + '/' + TodayEndDate.getFullYear();
 
-  const [displayEndDate, setdisplayEndDate] = useState(TodayEndDate);
+  const [displayEndDate, setdisplayEndDate] = useState(prevEndDate);
 
   const onEndChange = (event, selectedEndDate) => {
     const currentEndDate = selectedEndDate || endDate;
@@ -182,7 +192,7 @@ export default function AddWalletPage() {
             <View style={styles.dateContainer}>
               {startDateShow === false && (<TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
                 onPress={showStartCalender}>
-                  <Text style={{textAlign: 'center', fontSize: 16}}>{displayStartDate}</Text>
+                  <Text style={{textAlign: 'center', fontSize: 16}}>{prevStartDate}</Text>
                 </TouchableOpacity>)
               }
     
@@ -232,7 +242,7 @@ export default function AddWalletPage() {
             <View style={styles.dateContainer}>
               {endDateShow === false && (<TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
                 onPress={showEndCalender}>
-                  <Text style={{textAlign: 'center', fontSize: 16}}>{displayEndDate}</Text>
+                  <Text style={{textAlign: 'center', fontSize: 16}}>{prevEndDate}</Text>
                 </TouchableOpacity>)
               }
     

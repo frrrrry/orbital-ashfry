@@ -144,7 +144,7 @@ const Wallet = (props) => {
   
     return convertMsToDays(differenceInMs)
   }
-  
+
   const convertToDate = (date) => {
     let tempDate = ''; 
     if (date.getMonth() + 1 > 9) {
