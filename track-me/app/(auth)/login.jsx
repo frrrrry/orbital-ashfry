@@ -5,12 +5,13 @@ import { Link } from "expo-router";
 import { Icon } from '@rneui/themed'; 
 import { useUserAuth } from "../../context/auth";
 import { useFonts } from 'expo-font';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function LoginPage() {
 
-    const [fontsLoaded] = useFonts({
-        'Bitter-Bold': require('../../assets/fonts/Bitter-Bold.ttf'),
-      });
+  const [fontsLoaded] = useFonts({
+    'Bitter-Bold': require('../../assets/fonts/Bitter-Bold.ttf'),
+  });
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
