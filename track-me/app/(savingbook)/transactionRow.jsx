@@ -22,6 +22,9 @@ export default function TransactionRow(props) {
     AsyncStorage.setItem('transactionType', transaction.type);
     AsyncStorage.setItem('transactionCategory', transaction.category);
     await AsyncStorage.setItem('transactionAmount', JSON.stringify(transaction.amount));
+    if (transaction.note == null) {
+      AsyncStorage.setItem('transactionNote', '');
+    } 
     AsyncStorage.setItem('transactionNote', transaction.note);
     await AsyncStorage.setItem('transactionMonth', JSON.stringify(transaction.month));
     await AsyncStorage.setItem('transactionYear', JSON.stringify(transaction.year));

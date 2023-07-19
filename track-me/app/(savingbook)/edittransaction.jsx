@@ -70,7 +70,7 @@ export default function EditTransactionPage() {
         (value) => setAmount(value))));
       
       AsyncStorage.getItem('transactionNote').then(
-        (value) => setNote(value));
+        (value) => value == null ? setNote('') : setNote(value));
 
       JSON.parse(JSON.stringify(AsyncStorage.getItem('transactionMonth').then(
         (value) => setMonth(value))));
@@ -83,18 +83,27 @@ export default function EditTransactionPage() {
         )));
 
     };
+
     getValueFunction();
 
   }, [isFocused]);
 
   // for date picker
+  const convertToDate = (date) => {
+    tempDate = date.getDate() + '/' + (date.getMonth() + 1) 
+                  + '/' + date.getFullYear();
+    return tempDate; 
+  }
+
   const [dateshow, setdateShow] = useState(false);
 
   let Todaydate = new Date(Date.now());
   Todaydate = Todaydate.getDate() + '/' + (Todaydate.getMonth() + 1) 
                 + '/' + Todaydate.getFullYear();
 
-  const [displayDate, setdisplayDate] = useState(Todaydate);
+  const prevDate = convertToDate(date); 
+  
+  const [displayDate, setdisplayDate] = useState(prevDate);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -241,7 +250,7 @@ export default function EditTransactionPage() {
           <View style={styles.dateContainer}>
             {dateshow === false && (<TouchableOpacity activeOpacity={0.8} style={styles.income_expenseContainer} 
               onPress={showCalender}>
-                <Text style={{textAlign: 'center', fontSize: 16}}>{displayDate}</Text>
+                <Text style={{textAlign: 'center', fontSize: 16}}>{prevDate}</Text>
               </TouchableOpacity>)
             }
 
