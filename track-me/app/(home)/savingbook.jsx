@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 330,
     height: 580, 
-    top: 20,
+    top: 50,
   },
   scrollView: {
     backgroundColor: 'white',
