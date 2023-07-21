@@ -8,7 +8,15 @@ describe('home screen', () => {
 
   })
 
-  it('should create subwallet reminders if wallets are created', () => {
+  it('should navigate to subwallet page when pressing the wallet icon', () => {
+    
+  })
+
+  it('should navigate to the saving book page when pressing the book icon', () => {
+
+  })
+
+  it('should navigate to the profile page when pressing the user icon', () => {
     
   })
 })

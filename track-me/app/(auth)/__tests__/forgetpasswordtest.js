@@ -9,22 +9,6 @@ describe('forget password screen', () => {
 
   })
 
-  it('should send password reset email if email keyed is valid', () => {
-
-  })
-
-  it('should show error message if empty email is keyed', () => {
-
-  })
-
-  it('should show error message if invalid email is keyed', () => {
-
-  })
-
-  it('should show error message when email keyed does not exixt in our database', () => {
-
-  })
-
   it('should navigate to login page when back to sign in button pressed', () => {
 
   })

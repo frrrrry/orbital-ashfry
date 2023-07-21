@@ -21,30 +21,6 @@ describe('login screen', () => {
       */
     })
 
-    it ("should show error message when email is empty", () => {
-
-    })
-    
-    it ('should show error message when password is empty', () => {
-
-    })
-
-    it ('should show error message when invalid email is keyed', () => {
-
-    })
-
-    it ('should show error message when the email keyed does not exist', () => {
-
-    })
-
-    it ('should show error message when wrong password is keyed', () => {
-
-    })
-
-    it ('should show error message when there are too many failed login attempts', () => {
-
-    })
-
     it ('should navigate to forget password page when forget password button pressed', () => {
 
     })

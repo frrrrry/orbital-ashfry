@@ -12,26 +12,6 @@ describe("sign up screen", () => {
 
   })
 
-  it('should show error message if email is empty', () => {
-
-  })
-
-  it('should show error message if password is empty', () => {
-
-  })
-
-  it('should show error message if invalid email is keyed', () => {
-
-  })
-
-  it('should show error message if password is less than 6 characters', () => {
-
-  })
-
-  it('should show error message is email already exists in database', () => {
-
-  })
-
   it ('should navigate to login page if sign in button is pressed', () => {
 
   })
