@@ -98,6 +98,9 @@ const Wallet = (props) => {
     AsyncStorage.setItem('walletTitle', walletItem.title); 
     await AsyncStorage.setItem('walletStartDate', JSON.stringify(walletItem.startDate));
     await AsyncStorage.setItem('walletEndDate', JSON.stringify(walletItem.endDate));
+    if (walletItem.note == null) {
+      AsyncStorage.setItem('walletNote', '');
+    }
     AsyncStorage.setItem('walletNote', walletItem.note);
     await AsyncStorage.setItem('walletTotalAmount', walletItem.totalAmount);
     await AsyncStorage.setItem('walletCurrAmount', walletItem.currAmount);
