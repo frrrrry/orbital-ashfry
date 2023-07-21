@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from 'react-native-paper';
 import { useRouter } from "expo-router";
+// import { useNavigate, BrowserRouter, Route, Routes } from "react-router-dom";
 
 export default function FrontPage() {
   const router = useRouter();

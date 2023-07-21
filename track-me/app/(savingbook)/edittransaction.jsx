@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Link } from "expo-router";
+import { da } from 'date-fns/locale';
 
 export default function EditTransactionPage() {
   const isFocused = useIsFocused();

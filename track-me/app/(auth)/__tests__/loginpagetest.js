@@ -1,15 +1,16 @@
-/*
 import React from 'react';
-import LoginPage from '../login';
+import renderer from "react-test-renderer";
 import { fireEvent, render } from '@testing-library/react-native';
+// import LoginPage from '../login';
 
 describe('login screen', () => {
 
     it ("renders", () => {
-        const {getAllByText} = render(<LoginPage />);
+      // const {getAllByText} = render(<LoginPage />);
     })
 
     it ("should go to home page on login", () => {
+      /*
         const login = {handleLogin: () => {}}
         spyOn(login, "handleLogin");
         const page = render(<LoginPage />);
@@ -17,12 +18,14 @@ describe('login screen', () => {
         
         fireEvent.press(loginButton);
         // expect(login.handleLogin).toHaveBeenCalledWith("");
+      */
     })
 
-    // shows empty username and password message
+    it ('should navigate to forget password page when forget password button pressed', () => {
 
-    // shows invalid input message
-    // shows invalid username error message
-    // shows invalid password message
+    })
+
+    it ('should navigate to register page when create account button pressed', () => {
+      
+    })
 })
-*/
