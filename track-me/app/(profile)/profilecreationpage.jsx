@@ -45,11 +45,18 @@ export default function ProfileCreationPage() {
             aspect: [4,3],
             quality: 1,
         });
-        console.log(JSON.stringify(img));
-        
-        if (!img.cancelled) {
+        // console.log(JSON.stringify(img));
+        console.log("img: ", img); 
+        // console.log("img assets uri: ", img.assets[0].uri == img.uri);
+        /*
+        if (!img.canceled) {
             setImage(img.uri);
         }
+        */
+        if (!img.canceled) {
+          setImage(img.assets[0].uri); 
+        }
+        
       } catch (error) {
         console.log("addImage error in profilecreationpage", error);
       }

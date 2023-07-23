@@ -1,4 +1,11 @@
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, 
+  View, 
+  TextInput, 
+  KeyboardAvoidingView, 
+  TouchableWithoutFeedback, 
+  Platform, 
+  Keyboard, 
+} from "react-native";
 import { useState } from "react";
 import { Text, Button, ActivityIndicator } from "react-native-paper";
 import { Link } from "expo-router";

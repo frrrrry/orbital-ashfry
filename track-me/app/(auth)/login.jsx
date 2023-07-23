@@ -1,4 +1,11 @@
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, 
+  View, 
+  TextInput, 
+  KeyboardAvoidingView, 
+  TouchableWithoutFeedback, 
+  Platform, 
+  Keyboard, 
+} from "react-native";
 import { useState } from "react";
 import { Text, Button, ActivityIndicator } from "react-native-paper";
 import { Link } from "expo-router";
@@ -59,14 +66,15 @@ export default function LoginPage() {
         
     }
     return (
-        <View style={styles.container}>
-
-            <View style={{ flex: 1 }}>
+        <KeyboardAvoidingView 
+          behavior="height"
+          style={styles.container}>
+              <View style={{ flex: 1, }}>
                 <Text style={styles.title}>Sign in</Text>
                 <Text style={styles.subtitle}>Please sign in to continue.</Text>
-            </View>
+              </View>
 
-            <View style={{ flex: 1.85 }}>
+              <View style={{ flex: 1.85, top: 20 }}>
                 <Text style={styles.body}>Email</Text>
                 <View style={styles.inputContainer}>
                     <TextInput
@@ -90,15 +98,14 @@ export default function LoginPage() {
                         onChangeText={setPassword} />
                     <Icon name="lock" size={20} color="#000"/>
                 </View>
-
+                
                 <Button onPress={handleLogin} 
                 mode="contained" buttonColor="#c5c5c5" style={ styles.submitContainer } testID="signinButton">
                     Sign in</Button>
                 {errMsg !== "" && <Text style={ {top:20, width: 300} }>{errMsg}</Text>}
                 {loading && <ActivityIndicator color="black" style={ styles.submitContainer }/>}
 
-            </View>
-            
+              </View>
             <View style={{ flex: 0.5, flexDirection:"row"  }}>
                 <Text>
                     <Link href="/register">
@@ -109,8 +116,7 @@ export default function LoginPage() {
                     </Link>
                 </Text>
             </View>
-
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
