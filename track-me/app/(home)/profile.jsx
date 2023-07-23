@@ -83,6 +83,9 @@ export default function ProfilePage() {
   const router = useRouter();
 
   const handleEdit = async () => {
+    if (avatarUrl == nullAvatar) {
+      AsyncStorage.setItem('avatarUrl', '');
+    }
     AsyncStorage.setItem('avatarUrl', avatarUrl);
     AsyncStorage.setItem('username', username);
     AsyncStorage.setItem('bio', bio);
